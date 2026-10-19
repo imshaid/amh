@@ -104,7 +104,13 @@ export default defineConfig([
 
   // Node-side files: configs, scripts and end-to-end tests.
   {
-    files: ["*.{js,ts}", "apps/web/*.{js,ts}", "apps/web/e2e/**", "scripts/**"],
+    files: [
+      "*.{js,ts}",
+      "apps/web/*.{js,ts}",
+      "apps/web/e2e/**",
+      "apps/web/scripts/**",
+      "scripts/**",
+    ],
     languageOptions: {
       globals: globals.node,
     },
