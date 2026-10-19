@@ -83,6 +83,13 @@ export default defineConfig([
     files: ["**/*.{js,mjs,cjs}"],
     extends: [tseslint.configs.disableTypeChecked],
   },
+  {
+    files: ["apps/web/public/**/*.js"],
+    languageOptions: {
+      globals: globals.browser,
+      sourceType: "script",
+    },
+  },
 
   prettier,
 ]);

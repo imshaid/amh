@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens (skeleton). Values start from the approved prototype (docs/reference/demo.html);
+ * Segment 1 completes the set (type scale, spacing, motion) and tunes it.
+ *
+ * Raw tokens are plain custom properties so each theme can swap them. `@theme inline` exposes
+ * them to Tailwind as utilities (bg-surface, text-ink, border-line, …). Tailwind's default palette
+ * and font families are cleared so only system tokens can be used.
+ */
+
+/*
+ * Dark applies when a user chose it (data-theme="dark"), or when the system prefers dark and the
+ * user has not forced light. public/theme-boot.js sets data-theme before first paint.
+ */
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
+}
+
+:root {
+  color-scheme: light;
+
+  /* Canvas and surfaces: cool, slightly blue-tinted neutrals */
+  --bg: #eef2f7;
+  --surface: #ffffff;
+  --surface-2: #f5f7fb;
+  --line: #e0e6ef;
+  --line-strong: #ccd5e2;
+
+  /* Text */
+  --ink: #0f1b2d;
+  --ink-2: #43526a;
+  --muted: #748197;
+
+  /* Brand: the hotel's logo blue */
+  --brand: #285aa0;
+  --brand-strong: #1d4682;
+  --brand-ink: #ffffff;
+  --brand-soft: #e5edf9;
+
+  /* Accent: turmeric marks work in progress and delivery */
+  --turmeric: #a96c05;
+  --turmeric-soft: #fbf0d9;
+
+  /* Status colours are separate from the brand and always paired with an icon or a label */
+  --good: #0ca30c;
+  --good-ink: #006300;
+  --good-soft: #e3f4e3;
+  --warn: #fab219;
+  --warn-ink: #875700;
+  --warn-soft: #fdf2d8;
+  --serious: #ec835a;
+  --serious-ink: #a3471f;
+  --serious-soft: #fcebe3;
+  --crit: #d03b3b;
+  --crit-ink: #ad2828;
+  --crit-soft: #fbe6e6;
+
+  /* Charts */
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --grid: #e7ebf1;
+  --axis: #c3cad6;
+
+  /* Printed documents stay paper-white in both themes */
+  --paper: #ffffff;
+  --paper-ink: #285aa0;
+  --paper-soft: #dae3f3;
+  --paper-line: #d6dbe4;
+
+  --overlay: rgb(12 20 34 / 0.42);
+  --elevation: 0 1px 2px rgb(15 27 45 / 0.06), 0 10px 30px rgb(15 27 45 / 0.1);
+
+  @variant dark {
+    color-scheme: dark;
+
+    --bg: #0a1019;
+    --surface: #121a27;
+    --surface-2: #172131;
+    --line: #222e42;
+    --line-strong: #2d3b53;
+
+    --ink: #e8edf5;
+    --ink-2: #b2bdcf;
+    --muted: #8592a7;
+
+    --brand: #79a5e8;
+    --brand-strong: #9cbdf0;
+    --brand-ink: #0a1019;
+    --brand-soft: #192a46;
+
+    --turmeric: #e5ab45;
+    --turmeric-soft: #2c2313;
+
+    --good-ink: #57c85f;
+    --good-soft: #12301a;
+    --warn-ink: #f3c25c;
+    --warn-soft: #33280d;
+    --serious-ink: #f19a76;
+    --serious-soft: #3a2116;
+    --crit-ink: #f07b7b;
+    --crit-soft: #3a1616;
+
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --grid: #1d283a;
+    --axis: #33425b;
+
+    --paper-line: #2a3650;
+
+    --overlay: rgb(0 0 0 / 0.6);
+    --elevation: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 34px rgb(0 0 0 / 0.45);
+  }
+}
+
+@theme {
+  --color-*: initial;
+  --font-*: initial;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-turmeric: var(--turmeric);
+  --color-turmeric-soft: var(--turmeric-soft);
+  --color-good: var(--good);
+  --color-good-ink: var(--good-ink);
+  --color-good-soft: var(--good-soft);
+  --color-warn: var(--warn);
+  --color-warn-ink: var(--warn-ink);
+  --color-warn-soft: var(--warn-soft);
+  --color-serious: var(--serious);
+  --color-serious-ink: var(--serious-ink);
+  --color-serious-soft: var(--serious-soft);
+  --color-crit: var(--crit);
+  --color-crit-ink: var(--crit-ink);
+  --color-crit-soft: var(--crit-soft);
+  --color-series-1: var(--series-1);
+  --color-series-2: var(--series-2);
+  --color-series-3: var(--series-3);
+  --color-grid: var(--grid);
+  --color-axis: var(--axis);
+  --color-paper: var(--paper);
+  --color-paper-ink: var(--paper-ink);
+  --color-paper-soft: var(--paper-soft);
+  --color-paper-line: var(--paper-line);
+  --color-overlay: var(--overlay);
+
+  --shadow-raised: var(--elevation);
+
+  /* Web fonts are self-hosted in Segment 1; until then the system Bangla fonts below are used */
+  --font-display:
+    "Anek Bangla", "Hind Siliguri", "Noto Sans Bengali", "Nirmala UI", "Kohinoor Bangla",
+    system-ui, sans-serif;
+  --font-body:
+    "Hind Siliguri", "Noto Sans Bengali", "Nirmala UI", "Kohinoor Bangla", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --font-doc-bn: "Noto Serif Bengali", serif;
+  --font-doc-en: Tinos, "Times New Roman", "Liberation Serif", serif;
+
+  --default-font-family: var(--font-body);
+  --default-mono-font-family: var(--font-mono);
+}
+
+@layer base {
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
