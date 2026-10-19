@@ -110,6 +110,7 @@ export default defineConfig([
       "apps/web/*.{js,ts}",
       "apps/web/e2e/**",
       "apps/web/scripts/**",
+      "apps/web/build/**",
       "scripts/**",
     ],
     languageOptions: {

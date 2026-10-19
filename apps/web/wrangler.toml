@@ -1,0 +1,7 @@
+# Cloudflare Pages project for the web app. CI deploys `dist/` with `wrangler pages deploy`;
+# `npm run preview:pages -w @amh/web` serves the same build locally with Cloudflare's rules applied
+# (the generated _headers file, and the single-page-app fallback that applies because there is no
+# 404.html).
+name = "amh"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-10-01"

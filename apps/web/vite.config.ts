@@ -7,6 +7,7 @@ import { defineConfig } from "vite";
 import type { Plugin } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
+import { buildHeadersFile } from "./build/security-headers.ts";
 import { findClientEnvProblems } from "./src/lib/client-env-policy.ts";
 
 /** Fails dev and build when the environment would put something secret into the bundle. */
@@ -22,12 +23,29 @@ function clientEnvGuard(): Plugin {
   };
 }
 
+/** Writes Cloudflare Pages' _headers file, with a CSP that names the configured Supabase project. */
+function cloudflareHeaders(): Plugin {
+  let supabaseUrl: string | undefined;
+  return {
+    name: "amh:cloudflare-headers",
+    apply: "build",
+    configResolved(config) {
+      const value: unknown = config.env.VITE_SUPABASE_URL;
+      supabaseUrl = typeof value === "string" && value !== "" ? value : undefined;
+    },
+    generateBundle() {
+      this.emitFile({ type: "asset", fileName: "_headers", source: buildHeadersFile(supabaseUrl) });
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => ({
   // End-to-end builds (`--mode e2e`) never read a developer's .env files, so the smoke tests run the
   // same way everywhere: without a backend.
   envDir: mode === "e2e" ? false : undefined,
   plugins: [
     clientEnvGuard(),
+    cloudflareHeaders(),
     // Must run before the React plugin. Generates src/routeTree.gen.ts and splits each route's
     // component into its own chunk.
     tanstackRouter({

@@ -11,7 +11,7 @@ export default defineConfig((configEnv) =>
       test: {
         name: "web",
         environment: "jsdom",
-        include: ["src/**/*.test.{ts,tsx}"],
+        include: ["src/**/*.test.{ts,tsx}", "build/**/*.test.ts"],
         setupFiles: ["./src/test/setup.ts"],
         restoreMocks: true,
       },
