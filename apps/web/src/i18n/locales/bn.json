@@ -5,6 +5,7 @@
   },
   "nav": {
     "label": "প্রধান মেনু",
+    "skipToContent": "মূল অংশে যান",
     "work": "কাজ",
     "directory": "তালিকা",
     "dashboard": "ড্যাশবোর্ড",

@@ -59,8 +59,7 @@ export default defineConfig([
     },
     extends: [
       reactHooks.configs.flat.recommended,
-      // TanStack Router file routes export a `Route` object next to their components.
-      reactRefresh.configs.vite({ allowExportNames: ["Route"] }),
+      reactRefresh.configs.vite(),
       jsxA11y.configs.strict,
       i18next.configs["flat/recommended"],
     ],
@@ -86,6 +85,14 @@ export default defineConfig([
           },
         },
       ],
+    },
+  },
+  {
+    // Route files export `Route` next to their components. TanStack Router's code splitting moves
+    // each route component into its own module and handles its hot reload.
+    files: ["apps/web/src/routes/**/*.tsx"],
+    rules: {
+      "react-refresh/only-export-components": "off",
     },
   },
   {

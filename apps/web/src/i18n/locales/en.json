@@ -5,6 +5,7 @@
   },
   "nav": {
     "label": "Main menu",
+    "skipToContent": "Skip to content",
     "work": "Work",
     "directory": "Directory",
     "dashboard": "Dashboard",
