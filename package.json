@@ -14,7 +14,9 @@
     "dev": "npm run dev --workspace @amh/web",
     "build": "npm run build --workspace @amh/web",
     "preview": "npm run preview --workspace @amh/web",
-    "typecheck": "npm run typecheck --workspaces --if-present",
+    "typecheck": "tsc -p tsconfig.json && npm run typecheck --workspaces --if-present",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "lint": "eslint . --max-warnings=0 --cache --cache-location node_modules/.cache/eslint/",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write .",
@@ -34,6 +36,7 @@
     "prettier": "^3.9.10",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "~6.0.3",
-    "typescript-eslint": "^8.71.2"
+    "typescript-eslint": "^8.71.2",
+    "vitest": "^5.0.5"
   }
 }
