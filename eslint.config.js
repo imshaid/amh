@@ -1,0 +1,88 @@
+// @ts-check
+import js from "@eslint/js";
+import comments from "@eslint-community/eslint-plugin-eslint-comments/configs";
+import { defineConfig, globalIgnores } from "eslint/config";
+import prettier from "eslint-config-prettier/flat";
+import i18next from "eslint-plugin-i18next";
+import jsxA11y from "eslint-plugin-jsx-a11y-x";
+import reactHooks from "eslint-plugin-react-hooks";
+import { reactRefresh } from "eslint-plugin-react-refresh";
+import globals from "globals";
+import tseslint from "typescript-eslint";
+
+export default defineConfig([
+  globalIgnores([
+    "**/dist/",
+    "**/dev-dist/",
+    "**/coverage/",
+    "**/.vitest/",
+    "**/playwright-report/",
+    "**/test-results/",
+    "**/*.gen.ts",
+    "docs/reference/",
+    "supabase/.temp/",
+  ]),
+
+  js.configs.recommended,
+  tseslint.configs.strictTypeChecked,
+  tseslint.configs.stylisticTypeChecked,
+  comments.recommended,
+  {
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    linterOptions: {
+      reportUnusedDisableDirectives: "error",
+    },
+    rules: {
+      // Every eslint-disable must say why (BLUEPRINT §8: no `any` without a reason).
+      "@eslint-community/eslint-comments/require-description": [
+        "error",
+        { ignore: ["eslint-enable"] },
+      ],
+      "@typescript-eslint/consistent-type-imports": "error",
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/restrict-template-expressions": ["error", { allowNumber: true }],
+      eqeqeq: ["error", "smart"],
+      "no-console": ["error", { allow: ["warn", "error"] }],
+    },
+  },
+
+  // The web app: React rules, accessibility, and no hard-coded user-facing text.
+  {
+    files: ["apps/web/src/**/*.{ts,tsx}"],
+    languageOptions: {
+      globals: globals.browser,
+    },
+    extends: [
+      reactHooks.configs.flat.recommended,
+      // TanStack Router file routes export a `Route` object next to their components.
+      reactRefresh.configs.vite({ allowExportNames: ["Route"] }),
+      jsxA11y.configs.strict,
+      i18next.configs["flat/recommended"],
+    ],
+  },
+  {
+    files: ["**/*.test.{ts,tsx}", "apps/web/src/test/**", "apps/web/e2e/**"],
+    rules: {
+      "i18next/no-literal-string": "off",
+    },
+  },
+
+  // Node-side files: configs, scripts and end-to-end tests.
+  {
+    files: ["*.{js,ts}", "apps/web/*.{js,ts}", "apps/web/e2e/**", "scripts/**"],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
+  {
+    files: ["**/*.{js,mjs,cjs}"],
+    extends: [tseslint.configs.disableTypeChecked],
+  },
+
+  prettier,
+]);
