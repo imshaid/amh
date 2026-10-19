@@ -1,7 +1,9 @@
 // @ts-check
+import { fileURLToPath } from "node:url";
+
 import js from "@eslint/js";
 import comments from "@eslint-community/eslint-plugin-eslint-comments/configs";
-import { defineConfig, globalIgnores } from "eslint/config";
+import { defineConfig, globalIgnores, includeIgnoreFile } from "eslint/config";
 import prettier from "eslint-config-prettier/flat";
 import i18next from "eslint-plugin-i18next";
 import jsxA11y from "eslint-plugin-jsx-a11y-x";
@@ -11,18 +13,10 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default defineConfig([
-  globalIgnores([
-    "**/dist/",
-    "**/dist-e2e/",
-    "**/dev-dist/",
-    "**/coverage/",
-    "**/.vitest/",
-    "**/playwright-report/",
-    "**/test-results/",
-    "**/*.gen.ts",
-    "docs/reference/",
-    "supabase/.temp/",
-  ]),
+  // Everything git ignores (build output, tool state such as .wrangler/), plus committed files
+  // that are generated or reference material.
+  includeIgnoreFile(fileURLToPath(new URL(".gitignore", import.meta.url))),
+  globalIgnores(["**/*.gen.ts", "docs/reference/"]),
 
   js.configs.recommended,
   tseslint.configs.strictTypeChecked,
