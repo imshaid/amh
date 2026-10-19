@@ -169,8 +169,8 @@
 
   /* Web fonts are self-hosted in Segment 1; until then the system Bangla fonts below are used */
   --font-display:
-    "Anek Bangla", "Hind Siliguri", "Noto Sans Bengali", "Nirmala UI", "Kohinoor Bangla",
-    system-ui, sans-serif;
+    "Anek Bangla", "Hind Siliguri", "Noto Sans Bengali", "Nirmala UI", "Kohinoor Bangla", system-ui,
+    sans-serif;
   --font-body:
     "Hind Siliguri", "Noto Sans Bengali", "Nirmala UI", "Kohinoor Bangla", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
