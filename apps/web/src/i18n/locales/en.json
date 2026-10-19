@@ -1,0 +1,59 @@
+{
+  "app": {
+    "name": "Adarsha Munshir Hotel",
+    "tagline": "Orders & billing"
+  },
+  "nav": {
+    "label": "Main menu",
+    "work": "Work",
+    "directory": "Directory",
+    "dashboard": "Dashboard",
+    "orders": "Orders",
+    "newOrder": "New order",
+    "receivables": "Receivables",
+    "clients": "Clients",
+    "locations": "Locations",
+    "packages": "Packages"
+  },
+  "preferences": {
+    "language": "Language",
+    "languageNames": {
+      "bn": "বাংলা",
+      "en": "English"
+    },
+    "theme": "Theme",
+    "themes": {
+      "system": "Same as device",
+      "light": "Light",
+      "dark": "Dark"
+    }
+  },
+  "pages": {
+    "inProgress": "This page is still being built.",
+    "orderTitle": "Order {{number}}"
+  },
+  "server": {
+    "label": "Server",
+    "checking": "Checking…",
+    "connected": "Connected",
+    "unreachable": "Can’t reach the server",
+    "notConfigured": "The server isn’t set up yet"
+  },
+  "errors": {
+    "notFound": {
+      "title": "Page not found",
+      "body": "The link may be wrong, or the page has moved.",
+      "action": "Back to the dashboard"
+    },
+    "unexpected": {
+      "title": "Something went wrong",
+      "body": "This page couldn’t be shown. Try again; if it keeps happening, reload the app.",
+      "action": "Try again"
+    }
+  },
+  "pwa": {
+    "updateReady": "A new version of the app is ready.",
+    "reload": "Reload now",
+    "later": "Later"
+  }
+}

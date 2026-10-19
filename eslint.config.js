@@ -64,6 +64,29 @@ export default defineConfig([
       jsxA11y.configs.strict,
       i18next.configs["flat/recommended"],
     ],
+    rules: {
+      // JSX text and the attributes people read or hear must come from translations.
+      "i18next/no-literal-string": [
+        "error",
+        {
+          mode: "jsx-only",
+          "jsx-attributes": {
+            include: [
+              "aria-label",
+              "aria-description",
+              "aria-placeholder",
+              "aria-roledescription",
+              "aria-valuetext",
+              "alt",
+              "label",
+              "placeholder",
+              "title",
+            ],
+            exclude: [".*"],
+          },
+        },
+      ],
+    },
   },
   {
     files: ["**/*.test.{ts,tsx}", "apps/web/src/test/**", "apps/web/e2e/**"],
