@@ -4,7 +4,7 @@ Update this file at the end of every session. Newest notes at the top of each se
 
 | # | Segment | Status |
 |---|---|---|
-| 0 | Foundation | in progress (only the preview URL remains; it needs the owner's Cloudflare credentials) |
+| 0 | Foundation | done (the first preview deploy waits for the owner's Cloudflare token; see notes) |
 | 1 | Design system & shell | not started |
 | 2 | Database, auth, security | not started |
 | 3 | Directories | not started |
@@ -26,9 +26,9 @@ Status values: `not started`, `in progress`, `done`, `split` (say how).
 
 ### Segment 0 — Foundation
 
-#### 2026-10-19 — session 1 (branch `seg/00-foundation`, pushed, not merged)
+#### 2026-10-19 — session 1 (merged to `main`, tag `seg-00`)
 
-Everything in the segment is built, committed, pushed and verified, except deploying to a preview URL. The deploy pipeline is ready and runs as soon as Cloudflare is connected (see "Left over").
+Everything in the segment is built, verified and merged. One exception: no preview has been deployed yet, because that needs a Cloudflare API token only the owner can create. The owner left the choice to Claude, so the segment was closed with the pipeline ready. It deploys on the first push after the token exists (see "Left over" and DECISIONS).
 
 ##### Done
 
@@ -49,7 +49,7 @@ Everything in the segment is built, committed, pushed and verified, except deplo
 - **CI:**
   - `npm run check` runs typecheck, lint, format, unit tests, build, a bundle secret scan and the e2e tests.
   - `.github/workflows/ci.yml` runs the same steps and deploys branch previews once Cloudflare is configured.
-- **Docs:** `docs/data-model.md` started (with open questions for the owner), 18 entries in `docs/DECISIONS.md`, and the README.
+- **Docs:** `docs/data-model.md` started (with open questions for the owner), 21 new entries in `docs/DECISIONS.md`, and the README.
 
 ##### Verified
 
@@ -63,24 +63,22 @@ Everything in the segment is built, committed, pushed and verified, except deplo
   - the service worker registers and the app reloads offline.
 - The build refuses a stray `VITE_` variable and a `sb_secret_` key; the bundle scan catches planted secrets and names no values.
 - Mutation check: breaking `theme-boot.js` makes its e2e test fail.
+- **Hosted Supabase project:** created at the owner's request as `amh` (ref `bdzgidmoaigeubsowcpo`, ap-southeast-1, Postgres 17) and linked to the repo. Its public URL and publishable key are GitHub repository variables, so CI builds now point at it. A build with these values, served by `wrangler pages dev`, reports "সংযোগ আছে" against the hosted project with no CSP violations.
 
-##### Left over (owner actions)
+##### Left over (owner action)
 
-1. **The GitHub repository is public.** `CLAUDE.md` says private, and `docs/reference/samples/` contains real names and phone numbers. Claude was not permitted to change the visibility. Use Settings → General → Danger Zone → Change visibility → Private, or run `gh repo edit imshaid/amh --visibility private --accept-visibility-change-consequences`. There were no forks, stars or watchers at the time.
-2. **Cloudflare, needed to finish Segment 0:**
-   - Create an API token with the permission Account → Cloudflare Pages → Edit.
-   - Run `gh variable set CLOUDFLARE_ACCOUNT_ID --body <account id>`.
-   - Run `gh secret set CLOUDFLARE_API_TOKEN` and paste the token when asked.
-   - Re-run the latest CI run, or push. The first deploy creates the Pages project `amh` with production branch `production`, so every branch, main included, is a preview. The preview URL is printed in the job summary.
-3. **Hosted Supabase project:** none exists for AMH; the CLI account has only "Jogan". Create one in the region you choose (ap-south-1, Mumbai, is closest to Thakurgaon; Jogan uses ap-southeast-1, Singapore). Then:
-   - run `npx supabase link --project-ref <ref>`;
-   - set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` as GitHub variables (both are public values).
+**Cloudflare**, needed for the first preview deploy:
 
-   Not needed to finish Segment 0; needed before Segment 2's migrations go live.
+- Create an API token with the permission Account → Cloudflare Pages → Edit.
+- Run `gh variable set CLOUDFLARE_ACCOUNT_ID --body <account id>`.
+- Run `gh secret set CLOUDFLARE_API_TOKEN` and paste the token when asked.
+- Push, or re-run the latest CI run. The first deploy creates the Pages project `amh` with production branch `production`, so every branch, main included, is a preview. The preview URL is printed in the job summary.
+
+The database password of the hosted project is in `~/.config/amh/supabase-db-password` on this machine; keep a copy in a password manager.
 
 ##### Next session
 
-- If item 2 is done: open the preview URL and check it in Bangla and English, light and dark, on a phone. Then mark Segment 0 `done`, merge `seg/00-foundation` into `main` with `--no-ff`, push, tag `seg-00`, push the tag, delete the branch, and stop.
+- Start Segment 1. If the Cloudflare token now exists, check the first preview deploy (Bangla and English, light and dark, on a phone) and note the URL here.
 - Notes for Segment 1:
   - **Fonts:** none are loaded yet; system Bangla fallbacks are in the font tokens. Self-host Anek Bangla (with the width axis), Hind Siliguri, IBM Plex Mono, Noto Serif Bengali and Tinos.
   - **Shell to replace:** `src/app/shell/*` (app shell, preference controls, placeholder, status pages, server status line) and `src/app/update-prompt.tsx`, which should become a toast.
@@ -89,6 +87,7 @@ Everything in the segment is built, committed, pushed and verified, except deplo
 - Notes for Segment 2:
   - Read the open questions at the end of `docs/data-model.md`.
   - `supabase/config.toml` only changed ports, `site_url` and analytics. Decide signups, JWT expiry, `auto_expose_new_tables` and `seed.sql` (the CLI warns that it is missing).
+  - The hosted project is linked (`supabase/.temp/`, git-ignored). `npx supabase db push` needs the database password from `~/.config/amh/supabase-db-password`. Its Auth settings (site URL, redirect URLs) are still defaults; set them in Segment 2.
   - Give `createSupabaseClient` the generated `Database` type.
 - **Gotchas:**
   - `grep` is aliased to ugrep in this shell, and complex regexes can fail silently behind `||`.
