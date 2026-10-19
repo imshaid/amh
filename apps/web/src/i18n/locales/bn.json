@@ -1,0 +1,62 @@
+{
+  "app": {
+    "name": "আদর্শ মুন্সির হোটেল",
+    "tagline": "অর্ডার ও বিলিং"
+  },
+  "nav": {
+    "label": "প্রধান মেনু",
+    "skipToContent": "মূল অংশে যান",
+    "work": "কাজ",
+    "directory": "তালিকা",
+    "dashboard": "ড্যাশবোর্ড",
+    "orders": "অর্ডার",
+    "newOrder": "নতুন অর্ডার",
+    "receivables": "পাওনা ও পেমেন্ট",
+    "clients": "ক্লায়েন্ট",
+    "locations": "লোকেশন",
+    "packages": "প্যাকেজ ও দাম"
+  },
+  "preferences": {
+    "language": "ভাষা",
+    "languageNames": {
+      "bn": "বাংলা",
+      "en": "English"
+    },
+    "theme": "থিম",
+    "themes": {
+      "system": "ডিভাইসের মতো",
+      "light": "লাইট",
+      "dark": "ডার্ক"
+    }
+  },
+  "pages": {
+    "inProgress": "এই পাতাটা এখনো তৈরি হচ্ছে।",
+    "orderTitle": "অর্ডার {{number}}"
+  },
+  "server": {
+    "status": "সার্ভার: {{state}}",
+    "states": {
+      "checking": "দেখা হচ্ছে…",
+      "connected": "সংযোগ আছে",
+      "unreachable": "পৌঁছানো যাচ্ছে না",
+      "notConfigured": "এখনো সেট করা হয়নি"
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "পাতাটা খুঁজে পাওয়া যায়নি",
+      "body": "লিংকটা হয়তো ভুল, বা পাতাটা সরিয়ে ফেলা হয়েছে।",
+      "action": "ড্যাশবোর্ডে ফিরুন"
+    },
+    "unexpected": {
+      "title": "কিছু একটা সমস্যা হয়েছে",
+      "body": "পাতাটা দেখানো গেল না। আবার চেষ্টা করুন; বারবার হলে অ্যাপটা রিলোড করুন।",
+      "action": "আবার চেষ্টা করুন"
+    }
+  },
+  "pwa": {
+    "updateReady": "অ্যাপের নতুন সংস্করণ এসেছে।",
+    "reload": "এখনই চালু করুন",
+    "later": "পরে"
+  }
+}

@@ -1,0 +1,15 @@
+# Generated output
+package-lock.json
+**/dist/
+**/dist-e2e/
+**/dev-dist/
+**/coverage/
+**/.vitest/
+**/playwright-report/
+**/test-results/
+**/*.gen.ts
+supabase/.temp/
+
+# Prose and reference material are written by hand and not reformatted
+docs/
+*.md
