@@ -34,11 +34,13 @@
     "orderTitle": "অর্ডার {{number}}"
   },
   "server": {
-    "label": "সার্ভার",
-    "checking": "দেখা হচ্ছে…",
-    "connected": "সংযোগ আছে",
-    "unreachable": "সার্ভারে পৌঁছানো যাচ্ছে না",
-    "notConfigured": "সার্ভার এখনো সেট করা হয়নি"
+    "status": "সার্ভার: {{state}}",
+    "states": {
+      "checking": "দেখা হচ্ছে…",
+      "connected": "সংযোগ আছে",
+      "unreachable": "পৌঁছানো যাচ্ছে না",
+      "notConfigured": "এখনো সেট করা হয়নি"
+    }
   },
   "errors": {
     "notFound": {

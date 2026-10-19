@@ -5,6 +5,8 @@ import viteConfig from "./vite.config.ts";
 export default mergeConfig(
   viteConfig,
   defineConfig({
+    // Tests never read a developer's .env.local, so they cannot reach a real backend.
+    envDir: "./src/test",
     test: {
       name: "web",
       environment: "jsdom",

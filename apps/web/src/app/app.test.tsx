@@ -35,6 +35,8 @@ describe("app shell", () => {
       "প্যাকেজ ও দাম",
     ]);
     expect(document.title).toBe("ড্যাশবোর্ড · আদর্শ মুন্সির হোটেল");
+    // Tests run without a backend configured.
+    expect(screen.getByRole("status")).toHaveTextContent("সার্ভার: এখনো সেট করা হয়নি");
   });
 
   it("marks the current section and shows order numbers in Bangla digits", async () => {

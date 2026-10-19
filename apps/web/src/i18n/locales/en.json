@@ -34,11 +34,13 @@
     "orderTitle": "Order {{number}}"
   },
   "server": {
-    "label": "Server",
-    "checking": "Checking…",
-    "connected": "Connected",
-    "unreachable": "Can’t reach the server",
-    "notConfigured": "The server isn’t set up yet"
+    "status": "Server: {{state}}",
+    "states": {
+      "checking": "checking…",
+      "connected": "connected",
+      "unreachable": "can’t be reached",
+      "notConfigured": "not set up yet"
+    }
   },
   "errors": {
     "notFound": {
