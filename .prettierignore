@@ -1,6 +1,7 @@
 # Generated output
 package-lock.json
 **/dist/
+**/dist-e2e/
 **/dev-dist/
 **/coverage/
 **/.vitest/

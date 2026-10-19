@@ -86,6 +86,10 @@ export default defineConfig(({ mode }) => ({
     port: 5173,
     strictPort: true,
   },
+  build: {
+    // E2E builds go elsewhere so they never replace the production build in dist/.
+    outDir: mode === "e2e" ? "dist-e2e" : "dist",
+  },
   preview: {
     port: 4173,
     strictPort: true,
