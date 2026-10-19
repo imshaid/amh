@@ -1,0 +1,23 @@
+{
+  "name": "amh",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Order, delivery and billing system for Adarsha Munshir Hotel",
+  "type": "module",
+  "workspaces": [
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "npm run dev --workspace @amh/web",
+    "build": "npm run build --workspace @amh/web",
+    "preview": "npm run preview --workspace @amh/web",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "typescript": "~6.0.3"
+  }
+}
