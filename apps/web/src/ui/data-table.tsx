@@ -14,6 +14,12 @@ import { IconSortable, IconSortAscending, IconSortDescending } from "./icons";
 
 type Columns<TData extends RowData> = TableOptions<DataTableFeatures, TData>["columns"];
 
+/** A height-limited table scrolls inside itself: make it a named region keyboards can focus. */
+function scrollRegion(maxHeight: string | undefined, caption: string) {
+  if (maxHeight === undefined) return {};
+  return { role: "region", tabIndex: 0, "aria-label": caption, style: { maxHeight } } as const;
+}
+
 /** Rows above this count are virtualised when the table has a height limit. */
 const VIRTUALIZE_FROM = 60;
 const ROW_HEIGHT = 44;
@@ -119,7 +125,7 @@ function TableView<TData extends RowData>({
     <div
       ref={scrollRef}
       className={cn("overflow-auto rounded-xl border border-line bg-surface", className)}
-      style={maxHeight ? { maxHeight } : undefined}
+      {...scrollRegion(maxHeight, caption)}
     >
       <table className="w-full border-collapse text-ui">
         <caption className="sr-only">{caption}</caption>
@@ -265,13 +271,16 @@ function CardView<TData extends RowData>({
   return (
     <div
       ref={scrollRef}
-      role="list"
-      aria-label={caption}
       className={cn("overflow-auto", className)}
-      style={maxHeight ? { maxHeight } : undefined}
+      {...scrollRegion(maxHeight, caption)}
     >
       {virtual ? (
-        <div className="relative" style={{ height: virtualizer.getTotalSize() }}>
+        <div
+          role="list"
+          aria-label={caption}
+          className="relative"
+          style={{ height: virtualizer.getTotalSize() }}
+        >
           {virtualizer.getVirtualItems().map((item) => {
             const row = rows[item.index];
             if (!row) return null;
@@ -289,7 +298,9 @@ function CardView<TData extends RowData>({
           })}
         </div>
       ) : (
-        <div className="flex flex-col gap-2">{rows.map(card)}</div>
+        <div role="list" aria-label={caption} className="flex flex-col gap-2">
+          {rows.map(card)}
+        </div>
       )}
     </div>
   );

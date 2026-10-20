@@ -25,20 +25,27 @@ export function TopBar() {
         >
           {title}
         </p>
-        <button
-          type="button"
-          onClick={commandBar.open}
-          aria-label={t("shell.searchHint")}
-          aria-keyshortcuts="Control+K Meta+K"
-          className={cn(
-            "hidden h-10 w-64 items-center gap-2 rounded-lg border border-line bg-surface px-3 text-ui text-muted transition-colors duration-150 lg:flex xl:w-72",
-            "hover:border-line-strong hover:text-ink-2",
-          )}
-        >
-          <IconSearch className="size-4.5 shrink-0" aria-hidden="true" />
-          <span className="min-w-0 flex-1 truncate text-left">{t("shell.searchHint")}</span>
-          <Kbd aria-hidden="true">{isMac ? t("shell.shortcutMac") : t("shell.shortcut")}</Kbd>
-        </button>
+        <div className="relative hidden lg:block">
+          <button
+            type="button"
+            onClick={commandBar.open}
+            aria-keyshortcuts="Control+K Meta+K"
+            className={cn(
+              "flex h-10 w-64 items-center gap-2 rounded-lg border border-line bg-surface pr-16 pl-3 text-ui text-muted transition-colors duration-150 xl:w-72",
+              "hover:border-line-strong hover:text-ink-2",
+            )}
+          >
+            <IconSearch className="size-4.5 shrink-0" aria-hidden="true" />
+            <span className="min-w-0 flex-1 truncate text-left">{t("shell.searchHint")}</span>
+          </button>
+          {/* Decorative: aria-keyshortcuts already tells assistive technology. */}
+          <Kbd
+            aria-hidden="true"
+            className="pointer-events-none absolute top-1/2 right-2.5 -translate-y-1/2"
+          >
+            {isMac ? t("shell.shortcutMac") : t("shell.shortcut")}
+          </Kbd>
+        </div>
         <IconButton
           label={t("shell.search")}
           icon={IconSearch}

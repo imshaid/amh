@@ -69,10 +69,13 @@ describe("app shell", () => {
     renderApp("/packages");
     await screen.findByRole("heading", { level: 1, name: "প্যাকেজ ও দাম" });
 
-    await user.click(screen.getByRole("button", { name: "English" }));
+    await user.click(screen.getByRole("button", { name: "EN (English)" }));
 
     expect(await screen.findByRole("heading", { level: 1, name: "Packages" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "English" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "EN (English)" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
     expect(document.documentElement.lang).toBe("en");
     expect(document.title).toBe("Packages · Adarsha Munshir Hotel");
   });

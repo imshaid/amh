@@ -152,10 +152,11 @@ export function TypeSection() {
             </ul>
           </Specimen>
           <Specimen label={t("gallery.type.documents")}>
-            <p className="font-doc-bn text-2xl text-paper-ink">{t("app.name")}</p>
-            <p className="font-doc-en text-lg text-paper-ink">
-              {t("gallery.type.documentEnglish")}
-            </p>
+            {/* Documents are always paper-white, whatever the theme. */}
+            <div className="rounded-md bg-paper p-3 text-paper-ink shadow-paper">
+              <p className="font-doc-bn text-2xl">{t("app.name")}</p>
+              <p className="font-doc-en text-lg">{t("gallery.type.documentEnglish")}</p>
+            </div>
           </Specimen>
         </div>
       </div>

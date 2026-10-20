@@ -35,6 +35,7 @@
       "bn": "বাং",
       "en": "EN"
     },
+    "languageButton": "{{short}} ({{name}})",
     "theme": "Theme",
     "themeMenu": "Change theme, now: {{theme}}",
     "themes": {

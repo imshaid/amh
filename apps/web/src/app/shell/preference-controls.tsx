@@ -34,7 +34,10 @@ export function LanguageSwitch({ className }: { className?: string }) {
           type="button"
           lang={language}
           aria-pressed={current === language}
-          aria-label={t(`preferences.languageNames.${language}`)}
+          aria-label={t("preferences.languageButton", {
+            short: t(`preferences.languageShort.${language}`),
+            name: t(`preferences.languageNames.${language}`),
+          })}
           onClick={() => void setLanguage(language)}
           className={cn(
             "h-8 min-w-10 rounded-md px-2 text-sm font-semibold text-muted transition-colors duration-150 coarse:h-9",
