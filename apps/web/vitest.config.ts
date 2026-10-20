@@ -14,6 +14,8 @@ export default defineConfig((configEnv) =>
         include: ["src/**/*.test.{ts,tsx}", "build/**/*.test.ts"],
         setupFiles: ["./src/test/setup.ts"],
         restoreMocks: true,
+        // CSS imports are empty in tests, except the tokens, whose contrast is tested.
+        css: { include: [/src\/styles\/tokens\.css/] },
       },
     }),
   ),
