@@ -1,13 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useTranslation } from "react-i18next";
 
-import { PlaceholderPage } from "@/app/shell/placeholder-page";
+import { SectionPlaceholder } from "@/app/shell/section-placeholder";
+import { IconReceivables } from "@/ui/icons";
 
 export const Route = createFileRoute("/_app/receivables")({
   component: ReceivablesPage,
 });
 
 function ReceivablesPage() {
-  const { t } = useTranslation();
-  return <PlaceholderPage title={t("nav.receivables")} />;
+  return <SectionPlaceholder section="receivables" icon={IconReceivables} />;
 }

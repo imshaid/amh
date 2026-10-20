@@ -167,8 +167,7 @@
     "packages": {
       "subtitle": "Everyone knows a package by its price, so the price leads",
       "upcoming": "The new package list will be here, searchable by price, with an Excel import for the whole list."
-    },
-    "inProgress": "This page is still being built."
+    }
   },
   "errors": {
     "notFound": {
@@ -187,16 +186,6 @@
   "pwa": {
     "updateReady": "A new version of the app is ready",
     "updateHint": "Finish what you’re doing, then reload.",
-    "reload": "Reload now",
-    "later": "Later"
-  },
-  "server": {
-    "status": "Server: {{state}}",
-    "states": {
-      "checking": "checking…",
-      "connected": "connected",
-      "unreachable": "can’t be reached",
-      "notConfigured": "not set up yet"
-    }
+    "reload": "Reload now"
   }
 }
