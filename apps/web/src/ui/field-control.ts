@@ -32,7 +32,7 @@ export function useFieldProps(props: {
 
 /** Shared look of every text-like control: a 3:1 edge, an inset brand ring on focus. */
 export const fieldClasses = cn(
-  "w-full min-w-0 rounded-lg border border-field bg-surface text-base text-ink",
+  "w-full min-w-0 rounded-lg border border-field bg-surface text-input text-ink",
   "placeholder:text-muted transition-[border-color,box-shadow] duration-150",
   "hover:border-ink-2/70 focus-visible:border-brand focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-brand",
   "disabled:cursor-not-allowed disabled:bg-surface-2 disabled:text-muted",

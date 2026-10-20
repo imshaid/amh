@@ -9,7 +9,7 @@ import { extendTailwindMerge } from "tailwind-merge";
 const merge = extendTailwindMerge<"type-role">({
   extend: {
     theme: {
-      text: ["ui"],
+      text: ["ui", "input"],
       shadow: ["raised", "paper", "fab"],
       "font-weight": ["heading", "strong"],
       animate: ["rise", "fade-in", "flash", "shimmer", "pulse-once"],

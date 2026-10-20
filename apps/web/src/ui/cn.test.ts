@@ -6,6 +6,7 @@ describe("cn", () => {
   it("lets a later size, radius or shadow from our scales win", () => {
     expect(cn("text-sm", "text-ui")).toBe("text-ui");
     expect(cn("text-ui", "text-base")).toBe("text-base");
+    expect(cn("text-input", "text-3xl")).toBe("text-3xl");
     expect(cn("rounded-lg", "rounded-xl")).toBe("rounded-xl");
     expect(cn("shadow-raised", "shadow-paper")).toBe("shadow-paper");
     expect(cn("font-heading", "font-semibold")).toBe("font-semibold");

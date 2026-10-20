@@ -60,6 +60,12 @@
   --text-3xl--line-height: 1.15;
   --text-4xl: 2.25rem;
   --text-4xl--line-height: 1.08;
+  /*
+   * Text in form fields: body size, but never under 16px on touch screens, where iOS zooms into a
+   * field with smaller text. A field that wants bigger text just uses a bigger size.
+   */
+  --text-input: max(var(--field-min-text), 0.9375rem);
+  --text-input--line-height: 1.55;
 
   /* Weights between the named ones, for the variable display face. */
   --font-weight-heading: 620;
@@ -331,6 +337,13 @@
 }
 
 @layer base {
+  :root {
+    --field-min-text: 0px;
+    @media (pointer: coarse) {
+      --field-min-text: 16px;
+    }
+  }
+
   html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
@@ -383,17 +396,5 @@
     line-height: var(--text-xs--line-height);
     font-weight: 500;
     color: var(--muted);
-  }
-}
-
-/*
- * Unlayered on purpose, so it beats any text-size utility: on touch screens iOS zooms into a
- * field whose text is smaller than 16px.
- */
-@media (pointer: coarse) {
-  input,
-  select,
-  textarea {
-    font-size: max(16px, 1em);
   }
 }
