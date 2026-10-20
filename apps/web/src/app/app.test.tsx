@@ -1,19 +1,25 @@
-import { screen, within } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { commandBar } from "@/app/shell/command-bar-store";
 import { setLanguage } from "@/i18n/i18n";
 import { renderApp } from "@/test/render-app";
 
 beforeEach(async () => {
+  // The command bar's open state lives outside React; a test that leaves it open must not leak.
+  commandBar.close();
   localStorage.clear();
   delete document.documentElement.dataset.theme;
   await setLanguage("bn");
   localStorage.clear();
 });
 
-/** The shell renders one menu for wide screens and one for phones; CSS shows one at a time. */
-function mainMenu(name = "প্রধান মেনু") {
+/**
+ * The shell renders the sidebar menu and the phone's bottom bar; CSS shows one at a time, so tests
+ * use the sidebar (the first one).
+ */
+function sidebar(name = "প্রধান মেনু") {
   const [menu] = screen.getAllByRole("navigation", { name });
   if (!menu) throw new Error("The main menu is missing");
   return within(menu);
@@ -23,9 +29,14 @@ describe("app shell", () => {
   it("opens on the dashboard in Bangla with the full main menu", async () => {
     renderApp("/");
 
-    expect(await screen.findByRole("heading", { name: "ড্যাশবোর্ড" })).toBeInTheDocument();
-    const links = mainMenu().getAllByRole("link");
-    expect(links.map((link) => link.textContent)).toEqual([
+    expect(
+      await screen.findByRole("heading", { level: 1, name: "ড্যাশবোর্ড" }),
+    ).toBeInTheDocument();
+    expect(
+      sidebar()
+        .getAllByRole("link")
+        .map((link) => link.textContent),
+    ).toEqual([
       "ড্যাশবোর্ড",
       "অর্ডার",
       "নতুন অর্ডার",
@@ -35,15 +46,19 @@ describe("app shell", () => {
       "প্যাকেজ ও দাম",
     ]);
     expect(document.title).toBe("ড্যাশবোর্ড · আদর্শ মুন্সির হোটেল");
-    // Tests run without a backend configured.
-    expect(screen.getByRole("status")).toHaveTextContent("সার্ভার: এখনো সেট করা হয়নি");
+    // Tests run without a backend configured; the live indicator says so.
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "সার্ভার এখনো সেট করা হয়নি, তাই কোনো ডেটা নেই।",
+    );
   });
 
   it("marks the current section and shows order numbers in Bangla digits", async () => {
     renderApp("/orders/0047");
 
-    expect(await screen.findByRole("heading", { name: "অর্ডার ০০৪৭" })).toBeInTheDocument();
-    const nav = mainMenu();
+    expect(
+      await screen.findByRole("heading", { level: 1, name: "অর্ডার ০০৪৭" }),
+    ).toBeInTheDocument();
+    const nav = sidebar();
     expect(nav.getByRole("link", { name: "অর্ডার" })).toHaveAttribute("aria-current", "page");
     expect(nav.getByRole("link", { name: "ড্যাশবোর্ড" })).not.toHaveAttribute("aria-current");
     expect(nav.getByRole("link", { name: "নতুন অর্ডার" })).not.toHaveAttribute("aria-current");
@@ -52,28 +67,98 @@ describe("app shell", () => {
   it("switches the whole interface to English", async () => {
     const user = userEvent.setup();
     renderApp("/packages");
-    await screen.findByRole("heading", { name: "প্যাকেজ ও দাম" });
+    await screen.findByRole("heading", { level: 1, name: "প্যাকেজ ও দাম" });
 
-    await user.click(screen.getByRole("button", { name: "English" }));
+    await user.click(screen.getByRole("button", { name: "EN (English)" }));
 
-    expect(await screen.findByRole("heading", { name: "Packages" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "English" })).toHaveAttribute("aria-pressed", "true");
+    expect(await screen.findByRole("heading", { level: 1, name: "Packages" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "EN (English)" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
     expect(document.documentElement.lang).toBe("en");
     expect(document.title).toBe("Packages · Adarsha Munshir Hotel");
   });
 
-  it("applies and remembers a theme choice", async () => {
+  it("applies and remembers a theme choice from the theme menu", async () => {
     const user = userEvent.setup();
     renderApp("/");
-    const theme = await screen.findByRole("combobox", { name: "থিম" });
 
-    await user.selectOptions(theme, "dark");
+    await user.click(await screen.findByRole("button", { name: "থিম বদলান, এখন: ডিভাইসের মতো" }));
+    await user.click(await screen.findByRole("menuitemradio", { name: "ডার্ক" }));
     expect(document.documentElement.dataset.theme).toBe("dark");
     expect(localStorage.getItem("amh:theme")).toBe("dark");
 
-    await user.selectOptions(theme, "system");
+    await user.click(screen.getByRole("button", { name: "থিম বদলান, এখন: ডার্ক" }));
+    await user.click(await screen.findByRole("menuitemradio", { name: "ডিভাইসের মতো" }));
     expect(document.documentElement.dataset.theme).toBeUndefined();
     expect(localStorage.getItem("amh:theme")).toBeNull();
+  });
+
+  it("opens the command bar with Ctrl+K and goes where you type, in either language", async () => {
+    const user = userEvent.setup();
+    const { router } = renderApp("/");
+    await screen.findByRole("heading", { level: 1, name: "ড্যাশবোর্ড" });
+
+    await user.keyboard("{Control>}k{/Control}");
+    const dialog = await screen.findByRole("dialog", { name: "খুঁজুন ও যান" });
+    // English words find Bangla items too.
+    await user.type(within(dialog).getByRole("combobox"), "packages");
+    expect(
+      within(dialog)
+        .getAllByRole("option")
+        .map((option) => option.textContent),
+    ).toEqual(["প্যাকেজ ও দাম"]);
+    await user.keyboard("{Enter}");
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe("/packages");
+    });
+    expect(
+      await screen.findByRole("heading", { level: 1, name: "প্যাকেজ ও দাম" }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("explains when the command bar finds nothing", async () => {
+    const user = userEvent.setup();
+    renderApp("/");
+    await screen.findByRole("heading", { level: 1, name: "ড্যাশবোর্ড" });
+
+    await user.click(screen.getByRole("button", { name: "খুঁজুন: অর্ডার, দাম, লোকেশন" }));
+    await user.type(await screen.findByRole("combobox"), "৯৯৯৯");
+
+    expect(await screen.findByText("কিছু পাওয়া যায়নি")).toBeInTheDocument();
+  });
+
+  it("reaches the directories through the phone's More sheet", async () => {
+    const user = userEvent.setup();
+    const { router } = renderApp("/");
+    await screen.findByRole("heading", { level: 1, name: "ড্যাশবোর্ড" });
+
+    const [, bottomBar] = screen.getAllByRole("navigation", { name: "প্রধান মেনু" });
+    if (!bottomBar) throw new Error("The bottom bar is missing");
+    await user.click(within(bottomBar).getByRole("button", { name: "আরও" }));
+    const sheet = await screen.findByRole("dialog", { name: "আরও" });
+    await user.click(within(sheet).getByRole("link", { name: "লোকেশন" }));
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe("/locations");
+    });
+    await waitFor(() => {
+      expect(screen.queryByRole("dialog", { name: "আরও" })).not.toBeInTheDocument();
+    });
+  });
+
+  it("shows the design gallery", async () => {
+    renderApp("/dev/gallery");
+
+    expect(
+      await screen.findByRole("heading", { level: 1, name: "ডিজাইন গ্যালারি" }),
+    ).toBeInTheDocument();
+    for (const section of ["রং", "বোতাম", "টেবিল", "নড়াচড়া"]) {
+      expect(screen.getByRole("heading", { level: 2, name: section })).toBeInTheDocument();
+    }
   });
 
   it("shows a helpful page for an unknown address", async () => {

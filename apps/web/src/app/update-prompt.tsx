@@ -1,13 +1,19 @@
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRegisterSW } from "virtual:pwa-register/react";
 
+import { toast } from "@/ui/toast/toast-store";
+
 const HOUR = 60 * 60 * 1000;
 
-/** Offers a newly deployed version of the app; Segment 1 restyles it as a toast. */
+/**
+ * Offers a newly deployed version of the app as a toast that waits for the user: reloading on its
+ * own could lose half-typed work. Dismissing it means "later".
+ */
 export function UpdatePrompt() {
   const { t } = useTranslation();
   const {
-    needRefresh: [needRefresh, setNeedRefresh],
+    needRefresh: [needRefresh],
     updateServiceWorker,
   } = useRegisterSW({
     onRegisteredSW(_url, registration) {
@@ -20,31 +26,22 @@ export function UpdatePrompt() {
     },
   });
 
-  if (!needRefresh) return null;
-  return (
-    <div
-      role="alert"
-      className="fixed inset-x-4 bottom-4 z-50 flex flex-wrap items-center gap-3 rounded-xl bg-ink px-4 py-3 text-sm text-surface shadow-raised md:right-6 md:left-auto md:max-w-md"
-    >
-      <p className="min-w-0 flex-1">{t("pwa.updateReady")}</p>
-      <div className="flex gap-2">
-        <button
-          type="button"
-          className="rounded-lg px-3 py-1.5 font-semibold text-surface/80 hover:text-surface"
-          onClick={() => {
-            setNeedRefresh(false);
-          }}
-        >
-          {t("pwa.later")}
-        </button>
-        <button
-          type="button"
-          className="rounded-lg bg-brand px-3 py-1.5 font-semibold text-brand-ink"
-          onClick={() => void updateServiceWorker()}
-        >
-          {t("pwa.reload")}
-        </button>
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    if (!needRefresh) return;
+    const id = toast.show({
+      title: t("pwa.updateReady"),
+      description: t("pwa.updateHint"),
+      tone: "info",
+      duration: Infinity,
+      action: {
+        label: t("pwa.reload"),
+        onAction: () => void updateServiceWorker(),
+      },
+    });
+    return () => {
+      toast.dismiss(id);
+    };
+  }, [needRefresh, t, updateServiceWorker]);
+
+  return null;
 }

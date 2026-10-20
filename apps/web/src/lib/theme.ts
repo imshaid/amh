@@ -7,10 +7,28 @@ export type ThemePreference = (typeof THEME_PREFERENCES)[number];
 /** Also read by public/theme-boot.js, which applies the choice before first paint. */
 export const THEME_STORAGE_KEY = "amh:theme";
 
+/**
+ * The browser's own UI colour (address bar, installed app title bar) in each theme: the page
+ * background token. public/theme-boot.js and index.html repeat these values; tests keep them equal.
+ */
+export const THEME_COLORS = { light: "#eef2f7", dark: "#0a1019" } as const;
+
 const listeners = new Set<() => void>();
 
 function isThemePreference(value: unknown): value is ThemePreference {
   return value === "system" || value === "light" || value === "dark";
+}
+
+/**
+ * index.html has one theme-color tag per colour scheme. A forced theme sets both to its colour, so
+ * the browser UI matches the page even when it differs from the device setting.
+ */
+function applyThemeColor(preference: ThemePreference): void {
+  const tags = document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]');
+  for (const tag of tags) {
+    const scheme = tag.media.includes("dark") ? "dark" : "light";
+    tag.content = THEME_COLORS[preference === "system" ? scheme : preference];
+  }
 }
 
 export function getThemePreference(): ThemePreference {
@@ -30,6 +48,7 @@ function applyTheme(preference: ThemePreference): void {
   } else {
     root.dataset.theme = preference;
   }
+  applyThemeColor(preference);
 }
 
 export function setThemePreference(preference: ThemePreference): void {

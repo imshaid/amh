@@ -1,0 +1,159 @@
+/*
+ * Design tokens: the raw values behind every colour, elevation and motion choice. Each theme is
+ * designed on its own (BLUEPRINT §7); dark is not an inversion of light. Values started from the
+ * approved prototype (docs/reference/demo.html) and were tuned for WCAG AA: src/styles/tokens.test.ts
+ * checks every text and control pair listed there, in both themes.
+ *
+ * Components never use these names directly; index.css maps them to Tailwind utilities
+ * (bg-surface, text-ink, border-field, …).
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Canvas and surfaces: cool, slightly blue-tinted neutrals. */
+  --bg: #eef2f7;
+  --surface: #ffffff;
+  /* Subtle fills: table headers, hovered rows, inset panels. */
+  --surface-2: #f5f7fb;
+  /* Dialogs, sheets, menus and popovers. Dark mode lifts these above the page. */
+  --surface-raised: #ffffff;
+  /* The tinted table that A4 documents lie on. */
+  --canvas: #e2e8f0;
+  /* Dividers and card edges: separation, not identification. */
+  --line: #e0e6ef;
+  --line-strong: #ccd5e2;
+  /* Form-control edges: at least 3:1 so fields are recognisable (WCAG 1.4.11). */
+  --field-line: #7d8a9e;
+
+  /* Text, strongest to quietest. All three meet 4.5:1 on every surface. */
+  --ink: #0f1b2d;
+  --ink-2: #43526a;
+  --muted: #5c6981;
+
+  /* Brand: the hotel's logo blue. */
+  --brand: #285aa0;
+  --brand-strong: #1d4682;
+  --brand-ink: #ffffff;
+  --brand-soft: #e5edf9;
+
+  /* Accent: turmeric marks work in progress and delivery. -ink is for text on -soft. */
+  --turmeric: #a96c05;
+  --turmeric-ink: #8a5600;
+  --turmeric-soft: #fbf0d9;
+
+  /*
+   * Status, separate from the brand and always paired with an icon or a label. The base step
+   * fills marks (dots, meters, chart bars); -ink is for text; -soft is a background.
+   */
+  --good: #0ca30c;
+  --good-ink: #006300;
+  --good-soft: #e3f4e3;
+  --warn: #fab219;
+  --warn-ink: #875700;
+  --warn-soft: #fdf2d8;
+  --serious: #ec835a;
+  --serious-ink: #a3471f;
+  --serious-soft: #fcebe3;
+  --crit: #d03b3b;
+  --crit-ink: #ad2828;
+  --crit-soft: #fbe6e6;
+
+  /*
+   * Charts: the categorical order is fixed and validated for colour-blind separation on these
+   * surfaces (adjacent pairs, all eight slots; all pairs, first three). Text never uses them.
+   */
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-6: #008300;
+  --series-7: #6250d6;
+  --series-8: #e34948;
+  --grid: #e7ebf1;
+  --axis: #c3cad6;
+
+  /* Printed documents stay paper-white in both themes; only their surroundings change. */
+  --paper: #ffffff;
+  --paper-ink: #285aa0;
+  --paper-soft: #dae3f3;
+  --paper-line: #d6dbe4;
+  /* Page editor: a field being typed into, and the hint that a field can be edited. */
+  --paper-focus: #fff3c4;
+  --paper-hover: rgb(40 90 160 / 0.07);
+
+  /*
+   * Toasts sit apart from the page: deep ink here, a lifted slate in dark mode. Both are dark, so
+   * their status colours are the light-on-dark steps in either theme.
+   */
+  --toast: #13213a;
+  --toast-ink: #f2f5f9;
+  --toast-muted: #b6c1d3;
+  --toast-info: #8fb4ee;
+  --toast-good: #57c85f;
+  --toast-warn: #f3c25c;
+  --toast-crit: #f07b7b;
+
+  --overlay: rgb(12 20 34 / 0.42);
+  --shadow-raised: 0 1px 2px rgb(15 27 45 / 0.06), 0 10px 30px rgb(15 27 45 / 0.1);
+  --shadow-paper: 0 1px 2px rgb(15 27 45 / 0.08), 0 6px 18px rgb(15 27 45 / 0.08);
+  --shadow-fab: 0 2px 4px rgb(29 70 130 / 0.18), 0 8px 18px rgb(29 70 130 / 0.22);
+
+  @variant dark {
+    color-scheme: dark;
+
+    --bg: #0a1019;
+    --surface: #121a27;
+    --surface-2: #172131;
+    --surface-raised: #1a2435;
+    --canvas: #070b12;
+    --line: #222e42;
+    --line-strong: #2d3b53;
+    --field-line: #64738c;
+
+    --ink: #e8edf5;
+    --ink-2: #b2bdcf;
+    --muted: #8592a7;
+
+    --brand: #79a5e8;
+    --brand-strong: #9cbdf0;
+    --brand-ink: #0a1019;
+    --brand-soft: #192a46;
+
+    --turmeric: #e5ab45;
+    --turmeric-ink: #e5ab45;
+    --turmeric-soft: #2c2313;
+
+    --good-ink: #57c85f;
+    --good-soft: #12301a;
+    --warn-ink: #f3c25c;
+    --warn-soft: #33280d;
+    --serious-ink: #f19a76;
+    --serious-soft: #3a2116;
+    --crit-ink: #f07b7b;
+    --crit-soft: #3a1616;
+
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --series-5: #d55181;
+    --series-6: #008300;
+    --series-7: #9085e9;
+    --series-8: #e66767;
+    --grid: #1d283a;
+    --axis: #33425b;
+
+    --paper-line: #2a3650;
+
+    --toast: #22304a;
+    --toast-ink: #e8edf5;
+    --toast-muted: #a9b5c8;
+
+    --overlay: rgb(0 0 0 / 0.6);
+    --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 34px rgb(0 0 0 / 0.45);
+    --shadow-paper: 0 1px 2px rgb(0 0 0 / 0.5), 0 10px 28px rgb(0 0 0 / 0.5);
+    --shadow-fab: 0 2px 4px rgb(0 0 0 / 0.4), 0 8px 20px rgb(0 0 0 / 0.45);
+  }
+}

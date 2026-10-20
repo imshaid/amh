@@ -1,114 +1,71 @@
-import { Link, Outlet } from "@tanstack/react-router";
+import { Outlet, useRouterState } from "@tanstack/react-router";
+import * as m from "motion/react-m";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { NAV_GROUPS, NAV_ITEMS } from "../navigation";
-import { LanguageSwitch, ThemeSelect } from "./preference-controls";
+import { DURATION, EASE_OUT } from "@/ui/motion/tokens";
 
-/*
- * Foundation shell: routing, landmarks and preferences. Segment 1 replaces the look with the
- * designed sidebar, top bar, phone bottom bar and command bar.
+import { BottomBar } from "./bottom-bar";
+import { CommandBar } from "./command-bar";
+import { PageTitleProvider } from "./page-title";
+import { Sidebar } from "./sidebar";
+import { TopBar } from "./top-bar";
+
+/**
+ * Moves keyboard and screen-reader focus to the new screen after a navigation, so the next Tab
+ * starts at the top of the content, not on the menu link that was pressed.
  */
-
-function Brand() {
-  const { t } = useTranslation();
-  return (
-    <Link to="/" className="flex items-center gap-2.5 rounded-lg px-1 py-0.5">
-      <span
-        aria-hidden="true"
-        className="grid size-9.5 shrink-0 place-items-center rounded-[10px] bg-brand font-display text-[13px] font-bold text-brand-ink"
-      >
-        AMH
-      </span>
-      {/* On phones the controls need the room; the name stays available to screen readers. */}
-      <span className="flex min-w-0 flex-col leading-tight max-sm:sr-only">
-        <span className="truncate font-display text-[17px] font-semibold">{t("app.name")}</span>
-        <span className="truncate text-xs text-muted">{t("app.tagline")}</span>
-      </span>
-    </Link>
-  );
+function useFocusOnNavigation(pathname: string) {
+  const first = useRef(true);
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    document.getElementById("main")?.focus({ preventScroll: true });
+  }, [pathname]);
 }
 
-const linkClass =
-  "block rounded-[9px] px-2.5 py-2 font-medium whitespace-nowrap text-ink-2 hover:bg-surface-2 hover:text-ink aria-[current=page]:bg-brand-soft aria-[current=page]:text-brand-strong";
-
-function SideNav() {
-  const { t } = useTranslation();
-  return (
-    <nav aria-label={t("nav.label")} className="flex flex-col gap-4">
-      {NAV_GROUPS.map((group) => (
-        <div key={group.label} className="flex flex-col gap-0.5">
-          <p className="px-2.5 pb-1 text-[11px] tracking-[0.08em] text-muted uppercase">
-            {t(group.label)}
-          </p>
-          {group.items.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              activeOptions={{ exact: item.exact }}
-              className={linkClass}
-            >
-              {t(item.label)}
-            </Link>
-          ))}
-        </div>
-      ))}
-    </nav>
-  );
-}
-
-function PhoneNav() {
-  const { t } = useTranslation();
-  return (
-    <nav aria-label={t("nav.label")} className="px-2 pb-2">
-      <div className="flex flex-wrap gap-1">
-        {NAV_ITEMS.map((item) => (
-          <Link
-            key={item.to}
-            to={item.to}
-            activeOptions={{ exact: item.exact }}
-            className={linkClass}
-          >
-            {t(item.label)}
-          </Link>
-        ))}
-      </div>
-    </nav>
-  );
-}
-
+/**
+ * The signed-in frame (BLUEPRINT §5.1): a sidebar on wide screens, a bottom bar on phones and
+ * tablets, a sticky top bar everywhere, and the Ctrl+K command bar.
+ */
 export function AppShell() {
   const { t } = useTranslation();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  useFocusOnNavigation(pathname);
+
   return (
-    <div className="min-h-dvh md:grid md:grid-cols-[15rem_minmax(0,1fr)]">
-      <a
-        href="#main"
-        className="sr-only z-50 rounded-lg bg-surface px-3 py-2 focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
-      >
-        {t("nav.skipToContent")}
-      </a>
-      <aside className="sticky top-0 hidden h-dvh flex-col gap-6 overflow-y-auto border-r border-line bg-surface px-3 py-5 md:flex">
-        <Brand />
-        <SideNav />
-      </aside>
-      <div className="flex min-w-0 flex-col">
-        <header className="z-30 border-b border-line bg-bg/85 backdrop-blur-md md:sticky md:top-0">
-          <div className="flex items-center gap-3 px-4 py-2.5 md:px-7">
-            <div className="min-w-0 md:hidden">
-              <Brand />
-            </div>
-            <div className="ml-auto flex shrink-0 items-center gap-2">
-              <LanguageSwitch />
-              <ThemeSelect />
-            </div>
-          </div>
-          <div className="md:hidden">
-            <PhoneNav />
-          </div>
-        </header>
-        <main id="main" tabIndex={-1} className="w-full max-w-360 px-4 pt-6 pb-14 md:px-7">
-          <Outlet />
-        </main>
+    <PageTitleProvider>
+      <div className="min-h-dvh lg:grid lg:grid-cols-[15.25rem_minmax(0,1fr)]">
+        <a
+          href="#main"
+          className="sr-only z-50 rounded-lg bg-surface px-3 py-2 font-semibold shadow-raised focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+        >
+          {t("nav.skipToContent")}
+        </a>
+        <Sidebar className="hidden lg:flex" />
+        <div className="flex min-w-0 flex-col">
+          <TopBar />
+          <main
+            id="main"
+            tabIndex={-1}
+            className="w-full max-w-360 px-4 pt-5 pb-32 outline-none sm:px-6 lg:px-7 lg:pt-6 lg:pb-16"
+          >
+            {/* Each screen fades and rises in briefly; the old one leaves at once. */}
+            <m.div
+              key={pathname}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: DURATION.slow, ease: EASE_OUT }}
+            >
+              <Outlet />
+            </m.div>
+          </main>
+        </div>
+        <BottomBar className="lg:hidden" />
+        <CommandBar />
       </div>
-    </div>
+    </PageTitleProvider>
   );
 }

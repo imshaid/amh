@@ -23,7 +23,9 @@ npm run db:env                    # writes apps/web/.env.local for the local sta
 npm run dev                       # http://localhost:5173
 ```
 
-The app also runs without Supabase; the dashboard then says the server is not set up yet.
+The app also runs without Supabase; the live indicator in the top bar then says the server is not set up yet.
+
+Every colour, type style and component is on one page at <http://localhost:5173/dev/gallery> (also in the command bar, Ctrl+K).
 
 ## Scripts
 
@@ -44,11 +46,14 @@ The app also runs without Supabase; the dashboard then says the server is not se
 ```text
 apps/web/            the app: React 19, TypeScript, Vite, TanStack Router and Query, Tailwind CSS v4, i18next
   src/routes/        file-based routes (src/routeTree.gen.ts is generated)
-  src/app/           router, query client, navigation, app shell
-  src/i18n/          bn and en catalogues, formatting (Bangla digits, taka)
-  src/lib/           environment, Supabase client, theme
+  src/app/           router, query client, navigation, app shell (sidebar, top bar, bottom bar, command bar)
+  src/ui/            the design system: primitives on Radix, icons, motion (see /dev/gallery)
+  src/styles/        tokens (colour, type, motion), fonts, and the contrast test that guards them
+  src/dev/           developer pages: the design gallery
+  src/i18n/          bn and en catalogues, formatting (Bangla digits, taka, dates)
+  src/lib/           environment, Supabase client, theme, media and network hooks
   build/             build-time code (Cloudflare security headers)
-  e2e/               Playwright smoke tests
+  e2e/               Playwright smoke tests and axe accessibility checks
 supabase/            local stack configuration; migrations and functions arrive in Segment 2
 scripts/             repository scripts (bundle secret scan, local env)
 docs/                blueprint, progress, decisions, data model, reference material

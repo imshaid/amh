@@ -2,6 +2,9 @@ import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 
 import type { RouterContext } from "@/app/router";
 import { UpdatePrompt } from "@/app/update-prompt";
+import { IconProvider } from "@/ui/icons";
+import { MotionProvider } from "@/ui/motion/motion-provider";
+import { Toaster } from "@/ui/toast/toaster";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: Root,
@@ -9,9 +12,13 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function Root() {
   return (
-    <>
-      <Outlet />
-      <UpdatePrompt />
-    </>
+    // Icons default to the prototype's 18px at a 1.75px stroke; components size them by context.
+    <IconProvider size={18} strokeWidth={1.75}>
+      <MotionProvider>
+        <Outlet />
+        <Toaster />
+        <UpdatePrompt />
+      </MotionProvider>
+    </IconProvider>
   );
 }

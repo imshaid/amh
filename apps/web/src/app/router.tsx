@@ -2,6 +2,8 @@ import type { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
 import type { RouterHistory } from "@tanstack/react-router";
 
+import { PageSkeleton } from "@/ui/skeleton";
+
 import { routeTree } from "../routeTree.gen";
 import { ErrorPage, NotFoundPage } from "./shell/status-page";
 
@@ -23,6 +25,10 @@ export function createAppRouter({
     defaultPreload: "intent",
     defaultNotFoundComponent: NotFoundPage,
     defaultErrorComponent: ErrorPage,
+    // Skeletons, not spinners (BLUEPRINT §7); only for loads long enough to notice.
+    defaultPendingComponent: PageSkeleton,
+    defaultPendingMs: 200,
+    defaultPendingMinMs: 300,
     scrollRestoration: true,
     ...(history ? { history } : {}),
   });

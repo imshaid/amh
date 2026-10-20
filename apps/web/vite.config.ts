@@ -89,9 +89,22 @@ export default defineConfig(({ mode }) => ({
       workbox: {
         // Precache the app shell only. Supabase is on another origin, so its requests always go
         // to the network and data is never served stale from the service worker.
-        globPatterns: ["**/*.{js,css,html,svg,png,ico,woff2}"],
+        globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
         navigateFallback: "/index.html",
         cleanupOutdatedCaches: true,
+        // Fonts are cached when a page first uses them, not precached: precaching would download
+        // every weight and subset (and the document fonts) at install, about 1.5 MB on a phone.
+        runtimeCaching: [
+          {
+            urlPattern: ({ request, sameOrigin }) => sameOrigin && request.destination === "font",
+            handler: "CacheFirst",
+            options: {
+              cacheName: "fonts",
+              expiration: { maxEntries: 40, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+        ],
       },
     }),
   ],

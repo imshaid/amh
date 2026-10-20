@@ -5,7 +5,7 @@ Update this file at the end of every session. Newest notes at the top of each se
 | # | Segment | Status |
 |---|---|---|
 | 0 | Foundation | done (the first preview deploy waits for the owner's Cloudflare token; see notes) |
-| 1 | Design system & shell | not started |
+| 1 | Design system & shell | done, waiting for the owner's review of the look (Segment 2 waits for it; see notes) |
 | 2 | Database, auth, security | not started |
 | 3 | Directories | not started |
 | 4 | Orders & schedule | not started |
@@ -23,6 +23,77 @@ Update this file at the end of every session. Newest notes at the top of each se
 Status values: `not started`, `in progress`, `done`, `split` (say how).
 
 ## Session notes
+
+### Segment 1 — Design system & shell
+
+#### 2026-10-20 — session 1 (merged to `main`, tag `seg-01`)
+
+The design system and the app shell are built, tested and merged. The segment's done-criterion, the owner reviewing the look in a browser, is still open: no preview URL exists yet (no Cloudflare token), so the owner reviews locally (see "Left over").
+
+##### Done
+
+- **Tokens** (`src/styles/`):
+  - Full light and dark colour sets, each designed on its own.
+  - A type scale with role utilities (`type-hero`, `type-title`, `type-heading`, `type-figure`, …), radii by role, overlay and paper elevation, motion easings and keyframes.
+  - An 8-slot chart palette validated for colour blindness on our surfaces.
+  - `tokens.test.ts` checks every text pair for 4.5:1 and every control edge or status mark for 3:1, in both themes. It found and fixed: muted text, turmeric text and form-field edges.
+- **Fonts:** Anek Bangla (weight and width axes), Hind Siliguri, IBM Plex Mono, Noto Serif Bengali, Tinos. Self-hosted, Bengali and Latin subsets only, cached on first use.
+- **Icons:** Lucide at 1.75px, under semantic names in `src/ui/icons.ts`.
+- **Primitives** (`src/ui/`):
+  - Controls: Button, IconButton, ConfirmButton (inline second press), Field with Input, Textarea, SearchInput and Select, ChipGroup/Chip, Tag, Pill, OrderStatusPill (all seven statuses).
+  - Containers: Card, CardHeader, Note, PageHeader, Kbd, Menu, Tabs (sliding indicator), Dialog, Sheet (drag to dismiss), toasts with job progress.
+  - States: Skeleton, PageSkeleton, EmptyState (empty, no results, error, unavailable).
+  - DataTable (TanStack Table v9: sorting, sticky header and footer, phone cards, virtualised rows).
+  - Figures: KpiTile, Meter, Sparkline (running month dashed and hollow), ProgressSteps (labels under circles in narrow containers).
+- **Motion** (`src/ui/motion/`): reduced-motion aware; screen fade-and-rise, Stagger, CountUp (settles on the exact decimal), a one-off realtime flash.
+- **Shell** (`src/app/shell/`):
+  - Sidebar (from 1024px) with a sliding highlight and the hotel's AMH mark.
+  - Sticky top bar: screen title, search, a live indicator that pulses once (never loops), বাং/EN, and a theme menu.
+  - Phone bottom bar: Home, Orders, a raised New button, Receivables, and More (a sheet with the directories and search).
+  - Command bar (Ctrl/⌘K): pages and actions, matched in either language and digit set.
+  - Focus moves to the new screen after navigation. Skeletons show for slow loads.
+  - Designed placeholder screens with their real subtitles; designed not-found and error pages.
+  - The PWA update prompt is a toast.
+  - A forced theme now also sets `<meta name="theme-color">` (Segment 0 leftover).
+- **`/dev/gallery`:** every token, type role, icon and component with sample data, in both languages and themes. Not in the menu; reach it from the command bar or the dashboard.
+- **Docs:** 18 entries in `docs/DECISIONS.md`; README layout updated.
+
+##### Verified
+
+- `npm run check` passes: 166 unit tests; 26 end-to-end tests on desktop and phone (2 phone-only tests skip on desktop).
+- The new end-to-end tests include axe WCAG 2.1 A/AA scans with no violations on the dashboard and the full gallery, light and dark, desktop and phone. The scans found and fixed: label-in-name on the language and search buttons, document fonts off paper in dark mode, and a scrollable list with no keyboard access.
+- Viewed at 1440×900, 1024×768, 834×1112 and 390×844, light and dark, Bangla and English, including open states: command bar, theme menu, select, dialog, More sheet, phone field sheet, toasts with progress. No console errors and no horizontal overflow at any width.
+- Keyboard: the Tab order runs skip link → brand → menu → search → language → theme → content, with a visible focus ring at every stop. The command bar works from the keyboard.
+- Bundle: the first screen loads about 260 KB of gzipped JS (React, router, query, i18n, Radix, Motion, the shell); the gallery is its own 51 KB chunk. Motion's features load with the app: loading them lazily left the first screen invisible (opacity 0) until they arrived.
+
+##### Left over
+
+**Owner action: review the look** (the segment's done-criterion). Run `npm run dev` and open <http://localhost:5173/dev/gallery>, then the other screens through the menu, on a PC and a phone (same Wi-Fi: `npm run dev -- --host`, then the PC's address on port 5173). Try light and dark, বাং and EN. Once the Cloudflare token exists (Segment 0 notes), the preview URL works too.
+
+**For the record:**
+
+- The pushes of `ef16bbc` and `ad1744c` failed CI. Their end-to-end tests still expected the Segment 0 shell; `4073fc5` fixed them.
+- `ad1744c`'s message also lists sparkline, steps and table changes that had already landed in `3ebac6f` and `ef16bbc`; it holds only the sidebar wrap and gallery sample fixes. Pushed history was not rewritten.
+
+##### Next session
+
+- **Before Segment 2:** confirm the owner has reviewed the look and apply their feedback first; it may touch tokens, type or the shell. If the owner has not reviewed it yet, ask rather than start Segment 2.
+- Notes for Segment 2:
+  - The order statuses in the UI are `draft`, `confirmed`, `delivering`, `billed`, `partlyPaid`, `paid`, `cancelled` (`src/ui/order-status.ts`). Map the database enum to these.
+  - Language and theme are still stored per device; BLUEPRINT §4 wants them on the profile.
+  - The live indicator reads `useServerStatus()` and `navigator.onLine`. Point it at the Realtime connection state when Realtime arrives.
+  - The Segment 0 Supabase notes still apply (open questions in `docs/data-model.md`, `config.toml`, generated `Database` type).
+- Notes for later segments:
+  - Build screens from `src/ui` and check new pieces in the gallery.
+  - DataTable takes stable `columns` and `data` (memoised).
+  - Toasts for PDF jobs: `toast.show({ progress })`, then `toast.update(id, { progress, duration })` when done.
+  - The command bar gains orders, prices and locations in Segments 3–4 and the AI assistant in 13.
+  - Performance pass (Segment 14): consider preloading the two main Bengali fonts and trimming the first-screen JS.
+- **Gotchas:**
+  - Vitest ignores CSS imports; `vitest.config.ts` whitelists `tokens.css` for the contrast test.
+  - Module-level stores (toasts, command bar) outlive a test; reset them in `beforeEach`.
+  - Tailwind utility names share namespaces: a `--text-field` size would have collided with the `field` colour, hence `text-input`.
+  - `pkill -f` still matches your own shell; stop servers by port (`ss -ltnp`).
 
 ### Segment 0 — Foundation
 

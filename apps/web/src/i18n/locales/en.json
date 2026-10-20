@@ -14,7 +14,16 @@
     "receivables": "Receivables",
     "clients": "Clients",
     "locations": "Locations",
-    "packages": "Packages"
+    "packages": "Packages",
+    "gallery": "Design gallery",
+    "more": "More",
+    "short": {
+      "home": "Home",
+      "orders": "Orders",
+      "new": "New",
+      "receivables": "Receivables",
+      "more": "More"
+    }
   },
   "preferences": {
     "language": "Language",
@@ -22,41 +31,402 @@
       "bn": "বাংলা",
       "en": "English"
     },
+    "languageShort": {
+      "bn": "বাং",
+      "en": "EN"
+    },
+    "languageButton": "{{short}} ({{name}})",
     "theme": "Theme",
+    "themeMenu": "Change theme, now: {{theme}}",
     "themes": {
       "system": "Same as device",
       "light": "Light",
       "dark": "Dark"
     }
   },
-  "pages": {
-    "inProgress": "This page is still being built.",
-    "orderTitle": "Order {{number}}"
+  "shell": {
+    "search": "Search",
+    "searchHint": "Search orders, prices, places",
+    "shortcut": "Ctrl K",
+    "shortcutMac": "⌘ K"
   },
-  "server": {
-    "status": "Server: {{state}}",
-    "states": {
-      "checking": "checking…",
-      "connected": "connected",
-      "unreachable": "can’t be reached",
-      "notConfigured": "not set up yet"
+  "live": {
+    "short": {
+      "live": "Live",
+      "checking": "Connecting…",
+      "offline": "Offline",
+      "unreachable": "No connection",
+      "notConfigured": "No server"
+    },
+    "long": {
+      "live": "Live: changes from other devices show up here right away.",
+      "checking": "Checking the connection to the server…",
+      "offline": "No internet. The app goes live again when the connection is back.",
+      "unreachable": "The server can’t be reached. The app will try again shortly.",
+      "notConfigured": "The server isn’t set up yet, so there is no data."
+    }
+  },
+  "actions": {
+    "matchPayment": "Match a payment"
+  },
+  "commandBar": {
+    "title": "Search and go",
+    "placeholder": "Type where to go or what to do…",
+    "empty": "Nothing found",
+    "comingSoon": "Searching by order number, price and place is coming here soon.",
+    "groups": {
+      "pages": "Pages",
+      "actions": "Actions"
+    },
+    "actions": {
+      "newOrder": "Start a new order",
+      "switchLanguage": {
+        "bn": "Switch to Bangla (বাংলা)",
+        "en": "Switch to English"
+      },
+      "theme": "Theme: {{theme}}"
+    },
+    "hints": {
+      "move": "move",
+      "open": "open",
+      "close": "close",
+      "escKey": "Esc"
+    }
+  },
+  "ui": {
+    "close": "Close",
+    "dismiss": "Dismiss",
+    "required": "required",
+    "clearSearch": "Clear search",
+    "loading": "Loading…",
+    "notifications": "Notifications",
+    "progressOf": "{{done}} of {{total}}",
+    "percent": "{{value}}%",
+    "choose": "Choose",
+    "delta": {
+      "up": "up",
+      "down": "down",
+      "flat": "unchanged"
+    },
+    "steps": {
+      "label": "Order progress",
+      "done": "done",
+      "current": "in progress",
+      "upcoming": "to do",
+      "names": {
+        "order": "Order",
+        "delivery": "Delivery",
+        "bill": "Bill",
+        "payment": "Payment"
+      }
+    },
+    "table": {
+      "sort": "sort"
+    }
+  },
+  "status": {
+    "order": {
+      "draft": "Draft",
+      "confirmed": "Confirmed",
+      "delivering": "Delivering",
+      "billed": "Billed · awaiting payment",
+      "partlyPaid": "Partly paid",
+      "paid": "Paid",
+      "cancelled": "Cancelled"
+    }
+  },
+  "pages": {
+    "building": {
+      "title": "This screen is still being built"
+    },
+    "orderTitle": "Order {{number}}",
+    "allOrders": "All orders",
+    "dashboard": {
+      "subtitle": "What’s due, what money is expected and what’s being delivered, at a glance.",
+      "upcoming": "Money waiting to be paid, this month’s bills and payments, today’s deliveries and who did what will show here."
+    },
+    "orders": {
+      "subtitle": "Challans, bill, summary and datasheet are generated from each order.",
+      "upcoming": "Every order will be listed here with its status, challan count and bill total, with search and filters."
+    },
+    "newOrder": {
+      "subtitle": "Drop the order in from wherever it came. The system drafts it; you check and confirm.",
+      "upcoming": "Orders will start from an Excel file, a PDF or photo, a phone call, or page by page as before."
+    },
+    "receivables": {
+      "subtitle": "Every ৳100 billed arrives as ৳84 · the deduction rate is a client setting",
+      "upcoming": "Paste a bank SMS here to match a payment, and see which bills are unpaid and for how long."
+    },
+    "clients": {
+      "subtitle": "Organisation → project; each project has its own address, POs and deduction rule",
+      "upcoming": "Each client’s billing this fiscal year, unpaid amount and average days to pay will be here."
+    },
+    "locations": {
+      "subtitle": "The English name clients write and the Bangla name on the datasheet, kept together",
+      "upcoming": "Locations will be listed here with their union, spelling variants and delivery counts."
+    },
+    "packages": {
+      "subtitle": "Everyone knows a package by its price, so the price leads",
+      "upcoming": "The new package list will be here, searchable by price, with an Excel import for the whole list."
     }
   },
   "errors": {
     "notFound": {
       "title": "Page not found",
+      "lead": "There is no page at this address",
       "body": "The link may be wrong, or the page has moved.",
       "action": "Back to the dashboard"
     },
     "unexpected": {
       "title": "Something went wrong",
-      "body": "This page couldn’t be shown. Try again; if it keeps happening, reload the app.",
+      "lead": "This page couldn’t be shown",
+      "body": "Try again; if it keeps happening, reload the app.",
       "action": "Try again"
     }
   },
   "pwa": {
-    "updateReady": "A new version of the app is ready.",
-    "reload": "Reload now",
-    "later": "Later"
+    "updateReady": "A new version of the app is ready",
+    "updateHint": "Finish what you’re doing, then reload.",
+    "reload": "Reload now"
+  },
+  "gallery": {
+    "eyebrow": "Developer page · /dev/gallery",
+    "intro": "Every colour, type style and component of the app in one place. Switch the theme and language at the top, and open it on a phone too.",
+    "contents": "On this page",
+    "sections": {
+      "colors": "Colour",
+      "type": "Type",
+      "icons": "Icons",
+      "buttons": "Buttons",
+      "forms": "Forms",
+      "chips": "Chips & status",
+      "cards": "Cards",
+      "tabs": "Tabs",
+      "overlays": "Overlays",
+      "states": "Loading & empty",
+      "data": "Tables",
+      "figures": "Figures",
+      "motion": "Motion"
+    },
+    "colors": {
+      "title": "Colour",
+      "body": "The hotel’s logo blue is the brand, turmeric marks work in progress, and status colours stand apart, always with an icon or words. Light and dark are each designed on their own, and all text passes AA contrast.",
+      "groups": {
+        "surfaces": "Surfaces and lines",
+        "text": "Text",
+        "brand": "Brand and turmeric",
+        "status": "Status",
+        "charts": "Charts (checked for colour blindness)",
+        "paper": "Paper and toasts"
+      }
+    },
+    "type": {
+      "title": "Type",
+      "body": "Anek Bangla for headings and figures, Hind Siliguri for text, IBM Plex Mono for codes. Columns of figures use equal-width digits.",
+      "roles": "Type roles",
+      "sampleTitle": "September schedule — Baragaon, Senua, Auliapur",
+      "sampleHeading": "Monthly billed vs received",
+      "sampleSubheading": "Today and upcoming deliveries",
+      "sampleBody": "Challans, bill, summary and datasheet are generated from each order. The delivery boys get a link on their phones.",
+      "sampleMeta": "3 bills · oldest 49 days",
+      "sampleOverline": "Work",
+      "width": "Width axis: one face, four widths",
+      "codes": "Codes",
+      "tabular": "Tabular figures",
+      "documents": "Document fonts",
+      "documentEnglish": "Receiver’s Signature · Proprietor’s Signature"
+    },
+    "icons": {
+      "title": "Icons",
+      "body": "One set of stroke icons everywhere (Lucide) at a 1.75 stroke, named by what they mean."
+    },
+    "buttons": {
+      "title": "Buttons",
+      "body": "One main action per screen gets the blue button. Destructive actions ask for a second press. Buttons grow on touch screens.",
+      "variants": "Variants",
+      "sizes": "Sizes",
+      "states": "States",
+      "confirm": "Second-press confirm",
+      "print": "Print",
+      "delete": "Delete",
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large",
+      "edit": "Edit",
+      "copy": "Copy",
+      "issue": "Issue and lock",
+      "issuing": "Issuing…",
+      "disabled": "Not available",
+      "deletePage": "Delete page",
+      "confirmAgain": "Sure? Press again",
+      "confirmHint": "The first press asks; it resets by itself after a few seconds.",
+      "deleted": "Page deleted"
+    },
+    "forms": {
+      "title": "Forms",
+      "body": "Every field has a label, help where needed, and says how to fix a mistake. Field edges are dark enough to find at a glance.",
+      "fields": "Fields",
+      "other": "Search, long text, locked",
+      "orderTitle": "Order title",
+      "client": "Client",
+      "otherClient": "Others",
+      "po": "PO number",
+      "poHint": "e.g. PBD-2794325; bank SMS are matched by it",
+      "quantity": "Quantity",
+      "quantityError": "Enter a number such as 26 or 10+2",
+      "search": "Search",
+      "searchPlaceholder": "Search by price, e.g. 430",
+      "sms": "Bank SMS",
+      "smsHint": "Paste the whole SMS, with the BDT amount and the PBD number",
+      "smsSample": "BDT 86200.80 has been credited to your a/c through EFT, PBD2781190, on 08-OCT-26.",
+      "locked": "Bill number (locked)"
+    },
+    "chips": {
+      "title": "Chips, tags and statuses",
+      "body": "Chips filter, tags label, and every status has its own colour, icon and words.",
+      "filters": "Filters",
+      "statusFilter": "Filter by status",
+      "dayFilter": "Filter by day",
+      "all": "All",
+      "allDays": "All days",
+      "billed": "Billed",
+      "tags": "Tags",
+      "snacks": "Snacks",
+      "lunch": "Lunch",
+      "union": "Baragaon",
+      "today": "Today",
+      "samePrice": "Another package has this price",
+      "statuses": "Order statuses",
+      "exactMatch": "Exact match",
+      "mismatch": "Mismatch"
+    },
+    "cards": {
+      "title": "Cards and notes",
+      "body": "Cards only where one subject belongs together, not everywhere. On a package card the price leads.",
+      "panelTitle": "Receivables by age",
+      "panelSubtitle": "Days since the bill was issued",
+      "viewAll": "View all",
+      "panelBody": "The standard panel: surface with a hairline edge, holding one chart or list.",
+      "insetTitle": "Inset group",
+      "insetBody": "A quieter group inside a panel, without an edge."
+    },
+    "notes": {
+      "info": "The deduction rate comes from the client’s settings. This panel is never printed.",
+      "locked": "Issued 15/09/2026 and locked. A change creates a revised bill.",
+      "success": "All 28 challans are back, signed.",
+      "warning": "Bill quantities and challan totals differ for 2 packages.",
+      "error": "No amount or PO number was found in the SMS."
+    },
+    "tabs": {
+      "title": "Tabs",
+      "body": "The underline slides to the chosen tab. Arrow keys move between tabs.",
+      "label": "Order sections",
+      "schedule": "Schedule",
+      "challans": "Challans",
+      "bill": "Bill",
+      "datasheet": "Datasheet",
+      "history": "History",
+      "panels": {
+        "schedule": "Rows of date × location, a price column per package, and totals.",
+        "challans": "Every challan, signed copies returned, and the A4 preview.",
+        "bill": "The bill’s A4 preview, the deduction panel, and issue and lock.",
+        "datasheet": "The Bangla datasheet for the delivery boys.",
+        "history": "Who did what to this order, and when."
+      }
+    },
+    "overlays": {
+      "title": "Dialogs, sheets and toasts",
+      "body": "Dialogs for short decisions, sheets slide up on phones, and toasts say what happened, with progress for long jobs.",
+      "dialog": "Dialog",
+      "cancelOrder": "Cancel order",
+      "cancelTitle": "Cancel order 046?",
+      "cancelDescription": "REACTS-IN Project · 29 October",
+      "cancelBody": "Its challans and datasheet can no longer be printed. The order stays in the history.",
+      "keep": "Keep it",
+      "cancelled": "Order 046 cancelled",
+      "dialogHint": "Esc or a press outside closes it.",
+      "sheet": "Bottom sheet",
+      "openSheet": "Change a quantity",
+      "sheetTitle": "Quantity",
+      "sheetDescription": "Kesurbari, Baragaon · ৳50 snacks",
+      "quantityHint": "You can write a sum, e.g. 10+2",
+      "save": "Save",
+      "saved": "Quantity saved",
+      "sheetHint": "Big fields for phones; drag the handle down to close.",
+      "toasts": "Toasts",
+      "success": "Done",
+      "successTitle": "Order 047 created as a draft",
+      "successBody": "Challans and datasheet are ready.",
+      "error": "Problem",
+      "errorTitle": "Couldn’t save",
+      "errorBody": "Check the internet connection and try again.",
+      "job": "Build a PDF",
+      "pdfRunning": "Building PDF — 28 pages",
+      "pdfDone": "PDF ready — 28 pages",
+      "toastHint": "A long job’s toast stays until the job is done. Swipe right or press ✕ to dismiss."
+    },
+    "states": {
+      "title": "Loading and empty states",
+      "body": "Loading shows the shape of the page, not a spinner. Empty states say what happened and what to do next.",
+      "loading": "Loading",
+      "inPanel": "Inside a panel",
+      "inPanelHint": "Small, when a search finds nothing",
+      "noResultsTitle": "No package at this price",
+      "noResultsBody": "Try another price, or add a new package.",
+      "emptyTitle": "No orders yet",
+      "emptyBody": "Add the first order: from an Excel file, a PDF, a photo, or by hand.",
+      "errorTitle": "Couldn’t load the orders",
+      "errorBody": "The server couldn’t be reached. Try again in a moment.",
+      "offlineTitle": "No internet",
+      "offlineBody": "Pages opened before can still be seen. Saving anything new needs a connection."
+    },
+    "table": {
+      "title": "Tables",
+      "body": "Press a column to sort; money lines up on the right. On phones each row becomes a card. Long lists only draw what is on screen.",
+      "number": "No.",
+      "order": "Order",
+      "client": "Client",
+      "challans": "Challans",
+      "total": "Bill total",
+      "status": "Status",
+      "ordersCaption": "Orders (sample)",
+      "long": "A long list: 300 challans",
+      "longHint": "Scroll it: even thousands of rows stay smooth.",
+      "serial": "#",
+      "date": "Date",
+      "location": "Location",
+      "contact": "Contact",
+      "phone": "Phone",
+      "packs": "Packs",
+      "totalRow": "Total",
+      "challansCaption": "Challans (sample)"
+    },
+    "figures": {
+      "title": "Figures and progress",
+      "body": "Headline figures count up beside a small trend line. The running month is incomplete, so its point is hollow. Progress shows as meters and steps.",
+      "waiting": "Waiting to be paid (expected net)",
+      "waitingMeta": "3 bills · billed ৳2,83,770 · oldest 49 days",
+      "billed": "Billed in September",
+      "vsAugust": "vs August",
+      "received": "Received in October",
+      "receivedMeta": "Month so far · after 16% deduction",
+      "challans": "October challans",
+      "challansMeta": "delivered · 12 locations today",
+      "meters": "Meters",
+      "sparklines": "Sparklines",
+      "sparklineHint": "The last point is the current period; hollow means the month is still running.",
+      "steps": "Order steps"
+    },
+    "motion": {
+      "title": "Motion",
+      "body": "Short and purposeful: screens rise in, cards arrive one by one, a change from another device glows once. Everything stays still if the device asks for reduced motion.",
+      "entry": "Entry and count-up",
+      "replay": "Replay",
+      "realtime": "A change from another device",
+      "realtimeHint": "The row glows briefly when news arrives",
+      "simulate": "Add a delivery",
+      "todayRoute": "Today · Nargun route",
+      "deliveredOf": "{{done}} of {{total}} delivered"
+    }
   }
 }

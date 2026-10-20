@@ -16,6 +16,7 @@ import { Route as AppLocationsRouteImport } from "./routes/_app/locations";
 import { Route as AppNewRouteImport } from "./routes/_app/new";
 import { Route as AppPackagesRouteImport } from "./routes/_app/packages";
 import { Route as AppReceivablesRouteImport } from "./routes/_app/receivables";
+import { Route as AppDevGalleryRouteImport } from "./routes/_app/dev/gallery";
 import { Route as AppOrdersIndexRouteImport } from "./routes/_app/orders/index";
 import { Route as AppOrdersOrderIdRouteImport } from "./routes/_app/orders/$orderId";
 
@@ -53,6 +54,11 @@ const AppReceivablesRoute = AppReceivablesRouteImport.update({
   path: "/receivables",
   getParentRoute: () => AppRoute,
 } as any);
+const AppDevGalleryRoute = AppDevGalleryRouteImport.update({
+  id: "/dev/gallery",
+  path: "/dev/gallery",
+  getParentRoute: () => AppRoute,
+} as any);
 const AppOrdersIndexRoute = AppOrdersIndexRouteImport.update({
   id: "/orders/",
   path: "/orders/",
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   "/new": typeof AppNewRoute;
   "/packages": typeof AppPackagesRoute;
   "/receivables": typeof AppReceivablesRoute;
+  "/dev/gallery": typeof AppDevGalleryRoute;
   "/orders/$orderId": typeof AppOrdersOrderIdRoute;
   "/orders/": typeof AppOrdersIndexRoute;
 }
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   "/packages": typeof AppPackagesRoute;
   "/receivables": typeof AppReceivablesRoute;
   "/": typeof AppIndexRoute;
+  "/dev/gallery": typeof AppDevGalleryRoute;
   "/orders/$orderId": typeof AppOrdersOrderIdRoute;
   "/orders": typeof AppOrdersIndexRoute;
 }
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   "/_app/packages": typeof AppPackagesRoute;
   "/_app/receivables": typeof AppReceivablesRoute;
   "/_app/": typeof AppIndexRoute;
+  "/_app/dev/gallery": typeof AppDevGalleryRoute;
   "/_app/orders/$orderId": typeof AppOrdersOrderIdRoute;
   "/_app/orders/": typeof AppOrdersIndexRoute;
 }
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | "/new"
     | "/packages"
     | "/receivables"
+    | "/dev/gallery"
     | "/orders/$orderId"
     | "/orders/";
   fileRoutesByTo: FileRoutesByTo;
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
     | "/packages"
     | "/receivables"
     | "/"
+    | "/dev/gallery"
     | "/orders/$orderId"
     | "/orders";
   id:
@@ -126,6 +137,7 @@ export interface FileRouteTypes {
     | "/_app/packages"
     | "/_app/receivables"
     | "/_app/"
+    | "/_app/dev/gallery"
     | "/_app/orders/$orderId"
     | "/_app/orders/";
   fileRoutesById: FileRoutesById;
@@ -185,6 +197,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppReceivablesRouteImport;
       parentRoute: typeof AppRoute;
     };
+    "/_app/dev/gallery": {
+      id: "/_app/dev/gallery";
+      path: "/dev/gallery";
+      fullPath: "/dev/gallery";
+      preLoaderRoute: typeof AppDevGalleryRouteImport;
+      parentRoute: typeof AppRoute;
+    };
     "/_app/orders/": {
       id: "/_app/orders/";
       path: "/orders";
@@ -209,6 +228,7 @@ interface AppRouteChildren {
   AppPackagesRoute: typeof AppPackagesRoute;
   AppReceivablesRoute: typeof AppReceivablesRoute;
   AppIndexRoute: typeof AppIndexRoute;
+  AppDevGalleryRoute: typeof AppDevGalleryRoute;
   AppOrdersOrderIdRoute: typeof AppOrdersOrderIdRoute;
   AppOrdersIndexRoute: typeof AppOrdersIndexRoute;
 }
@@ -220,6 +240,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppPackagesRoute: AppPackagesRoute,
   AppReceivablesRoute: AppReceivablesRoute,
   AppIndexRoute: AppIndexRoute,
+  AppDevGalleryRoute: AppDevGalleryRoute,
   AppOrdersOrderIdRoute: AppOrdersOrderIdRoute,
   AppOrdersIndexRoute: AppOrdersIndexRoute,
 };

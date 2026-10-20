@@ -21,9 +21,10 @@ test.describe("foundation smoke", () => {
     await expect(page).toHaveTitle("ড্যাশবোর্ড · আদর্শ মুন্সির হোটেল");
     await expect(page.locator("html")).toHaveAttribute("lang", "bn");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("ড্যাশবোর্ড");
-    await expect(page.getByRole("status")).toContainText("সার্ভার:");
+    // The e2e build has no backend; the live indicator says so.
+    await expect(page.getByRole("status")).toContainText("সার্ভার এখনো সেট করা হয়নি");
 
-    // Exactly one menu is visible at any width.
+    // Exactly one menu is visible at any width: the sidebar, or the phone's bottom bar.
     const menu = page.getByRole("navigation", { name: "প্রধান মেনু" });
     await menu.getByRole("link", { name: "অর্ডার", exact: true }).click();
     await expect(page).toHaveURL("/orders");
@@ -36,7 +37,7 @@ test.describe("foundation smoke", () => {
 
   test("remembers English across a reload", async ({ page }) => {
     await page.goto("/packages");
-    await page.getByRole("button", { name: "English" }).click();
+    await page.getByRole("button", { name: "EN (English)" }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Packages");
 
     await page.reload();
@@ -91,11 +92,12 @@ test.describe("foundation smoke", () => {
 
 test.describe("theme boot script", () => {
   // A service worker would serve the bundle from its cache, out of reach of page.route().
-  test.use({ serviceWorkers: "block" });
+  test.use({ serviceWorkers: "block", colorScheme: "light" });
 
   test("applies a saved dark theme before the app bundle runs", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("combobox", { name: "থিম" }).selectOption("dark");
+    await page.getByRole("button", { name: /^থিম বদলান/ }).click();
+    await page.getByRole("menuitemradio", { name: "ডার্ক" }).click();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 
     // Block the app bundle: only public/theme-boot.js can have set the theme after this reload.
@@ -103,5 +105,10 @@ test.describe("theme boot script", () => {
     await page.reload();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
     await expect(page.locator("body")).toHaveCSS("background-color", "rgb(10, 16, 25)");
+    // The browser's own UI follows the forced theme, not the device's light setting.
+    await expect(page.locator('meta[name="theme-color"]').first()).toHaveAttribute(
+      "content",
+      "#0a1019",
+    );
   });
 });
