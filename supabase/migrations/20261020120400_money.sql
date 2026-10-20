@@ -234,7 +234,8 @@ begin
 end;
 $$;
 
-create trigger t60_sync_payment_status
+-- After the audit trigger (t90), so the log shows the allocation before the status it caused.
+create trigger t95_sync_payment_status
   after insert or update or delete on public.payment_allocations
   for each row execute function private.sync_payment_status();
 

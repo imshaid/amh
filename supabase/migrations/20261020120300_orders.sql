@@ -446,7 +446,8 @@ begin
 end;
 $$;
 
-create trigger t40_create_order_bill
+-- After the audit trigger (t90), so the log shows the order before its bill.
+create trigger t95_create_order_bill
   after insert on public.orders
   for each row execute function private.create_order_bill();
 
