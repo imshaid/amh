@@ -18,7 +18,7 @@ import { BILLED_BY_MONTH, RECEIVED_BY_MONTH } from "./sample-data";
 import { GallerySection, Specimen } from "./section";
 
 const METER_TONES: { tone: MeterTone; value: number }[] = [
-  { tone: "brand", value: 18 },
+  { tone: "brand", value: 9 },
   { tone: "turmeric", value: 7 },
   { tone: "good", value: 12 },
   { tone: "warn", value: 4 },

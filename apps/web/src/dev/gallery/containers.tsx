@@ -153,7 +153,8 @@ function useFakePdfJob() {
 
 export function OverlaysSection() {
   const { t } = useTranslation();
-  const [quantity, setQuantity] = useState("26");
+  const { digits } = useFormat();
+  const [quantity, setQuantity] = useState(() => digits("26"));
   const [sheetOpen, setSheetOpen] = useState(false);
   const runPdfJob = useFakePdfJob();
   return (

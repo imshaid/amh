@@ -18,7 +18,7 @@ export function Brand({ className }: { className?: string }) {
     >
       <BrandMark className="size-9.5" />
       <span className="flex min-w-0 flex-col">
-        <span className="truncate font-display text-lg leading-tight font-strong">
+        <span className="font-display text-lg leading-tight font-strong text-balance">
           {t("app.name")}
         </span>
         <span className="truncate text-xs text-muted">{t("app.tagline")}</span>
