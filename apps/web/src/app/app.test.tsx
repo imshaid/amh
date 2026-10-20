@@ -147,6 +147,17 @@ describe("app shell", () => {
     });
   });
 
+  it("shows the design gallery", async () => {
+    renderApp("/dev/gallery");
+
+    expect(
+      await screen.findByRole("heading", { level: 1, name: "ডিজাইন গ্যালারি" }),
+    ).toBeInTheDocument();
+    for (const section of ["রং", "বোতাম", "টেবিল", "নড়াচড়া"]) {
+      expect(screen.getByRole("heading", { level: 2, name: section })).toBeInTheDocument();
+    }
+  });
+
   it("shows a helpful page for an unknown address", async () => {
     renderApp("/no-such-page");
 

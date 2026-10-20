@@ -15,6 +15,7 @@ import {
   IconDark,
   IconDevice,
   IconEnterKey,
+  IconGallery,
   IconLanguage,
   IconLight,
   IconPlus,
@@ -135,6 +136,14 @@ export function CommandBar() {
                     {t(item.label)}
                   </Item>
                 ))}
+                <Item
+                  value="page:/dev/gallery"
+                  keywords={[...bothLanguages("nav.gallery"), "gallery", "design"]}
+                  icon={IconGallery}
+                  onSelect={() => void navigate({ to: "/dev/gallery" })}
+                >
+                  {t("nav.gallery")}
+                </Item>
               </Group>
               <Group heading={t("commandBar.groups.actions")}>
                 <Item

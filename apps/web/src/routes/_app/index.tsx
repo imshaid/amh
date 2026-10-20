@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { SectionPlaceholder } from "@/app/shell/section-placeholder";
 import { useFormat } from "@/i18n/hooks";
 import { Button } from "@/ui/button";
-import { IconDashboard, IconPlus, IconSms } from "@/ui/icons";
+import { IconDashboard, IconGallery, IconPlus, IconSms } from "@/ui/icons";
 
 export const Route = createFileRoute("/_app/")({
   component: DashboardPage,
@@ -22,6 +22,12 @@ function DashboardPage() {
       eyebrow={date(today)}
       actions={
         <>
+          <Button asChild variant="ghost">
+            <Link to="/dev/gallery">
+              <IconGallery aria-hidden="true" />
+              {t("nav.gallery")}
+            </Link>
+          </Button>
           <Button asChild>
             <Link to="/receivables">
               <IconSms aria-hidden="true" />
