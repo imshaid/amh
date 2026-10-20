@@ -82,3 +82,25 @@ export function formatMoney(
   const formatted = formatter(language, digits).format(magnitude);
   return `${negative && !isZero ? MINUS : ""}৳${formatted}`;
 }
+
+const DATE_LOCALES: Record<Language, string> = {
+  bn: "bn-BD",
+  // Day before month, as dates are written in Bangladesh.
+  en: "en-GB",
+};
+
+const DATE_STYLES = {
+  /** বৃহস্পতিবার, ৮ অক্টোবর, ২০২৬ · Thursday, 8 October 2026 */
+  long: { weekday: "long", day: "numeric", month: "long", year: "numeric" },
+  /** ৮ অক্টোবর · 8 Oct */
+  short: { day: "numeric", month: "short" },
+} as const satisfies Record<string, Intl.DateTimeFormatOptions>;
+
+/** Formats a calendar date in the UI language (Bangla digits and month names in Bangla mode). */
+export function formatDate(
+  date: Date,
+  language: Language,
+  style: keyof typeof DATE_STYLES = "long",
+): string {
+  return new Intl.DateTimeFormat(DATE_LOCALES[language], DATE_STYLES[style]).format(date);
+}

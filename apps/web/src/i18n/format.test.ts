@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { formatMoney, formatNumber, toBanglaDigits, toLatinDigits } from "./format";
+import { formatDate, formatMoney, formatNumber, toBanglaDigits, toLatinDigits } from "./format";
 
 describe("toBanglaDigits / toLatinDigits", () => {
   it("swaps only the digits", () => {
@@ -50,5 +50,19 @@ describe("formatMoney", () => {
     expect(() => formatMoney("1,200", "en")).toThrow(RangeError);
     expect(() => formatMoney("৳50", "en")).toThrow(RangeError);
     expect(() => formatMoney(Number.NaN, "en")).toThrow(RangeError);
+  });
+});
+
+describe("formatDate", () => {
+  const date = new Date(2026, 9, 8);
+
+  it("writes the weekday, day, month and year in the UI language", () => {
+    expect(formatDate(date, "bn")).toBe("বৃহস্পতিবার, ৮ অক্টোবর, ২০২৬");
+    expect(formatDate(date, "en")).toBe("Thursday, 8 October 2026");
+  });
+
+  it("has a short form for lists", () => {
+    expect(formatDate(date, "bn", "short")).toBe("৮ অক্টো");
+    expect(formatDate(date, "en", "short")).toBe("8 Oct");
   });
 });

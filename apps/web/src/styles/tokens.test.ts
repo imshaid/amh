@@ -91,6 +91,10 @@ const NON_TEXT_PAIRS: [string, string][] = [
   ["turmeric", "surface"],
   ["good", "surface"],
   ["crit", "surface"],
+  ["toast-info", "toast"],
+  ["toast-good", "toast"],
+  ["toast-warn", "toast"],
+  ["toast-crit", "toast"],
 ];
 
 const themes = parseThemes(tokensCss);

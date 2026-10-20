@@ -14,7 +14,16 @@
     "receivables": "Receivables",
     "clients": "Clients",
     "locations": "Locations",
-    "packages": "Packages"
+    "packages": "Packages",
+    "gallery": "Design gallery",
+    "more": "More",
+    "short": {
+      "home": "Home",
+      "orders": "Orders",
+      "new": "New",
+      "receivables": "Receivables",
+      "more": "More"
+    }
   },
   "preferences": {
     "language": "Language",
@@ -22,16 +31,164 @@
       "bn": "বাংলা",
       "en": "English"
     },
+    "languageShort": {
+      "bn": "বাং",
+      "en": "EN"
+    },
     "theme": "Theme",
+    "themeMenu": "Change theme, now: {{theme}}",
     "themes": {
       "system": "Same as device",
       "light": "Light",
       "dark": "Dark"
     }
   },
+  "shell": {
+    "search": "Search",
+    "searchHint": "Search orders, prices, places",
+    "shortcut": "Ctrl K",
+    "shortcutMac": "⌘ K"
+  },
+  "live": {
+    "short": {
+      "live": "Live",
+      "checking": "Connecting…",
+      "offline": "Offline",
+      "unreachable": "No connection",
+      "notConfigured": "No server"
+    },
+    "long": {
+      "live": "Live: changes from other devices show up here right away.",
+      "checking": "Checking the connection to the server…",
+      "offline": "No internet. The app goes live again when the connection is back.",
+      "unreachable": "The server can’t be reached. The app will try again shortly.",
+      "notConfigured": "The server isn’t set up yet, so there is no data."
+    }
+  },
+  "actions": {
+    "matchPayment": "Match a payment"
+  },
+  "commandBar": {
+    "title": "Search and go",
+    "placeholder": "Type where to go or what to do…",
+    "empty": "Nothing found",
+    "comingSoon": "Searching by order number, price and place is coming here soon.",
+    "groups": {
+      "pages": "Pages",
+      "actions": "Actions"
+    },
+    "actions": {
+      "newOrder": "Start a new order",
+      "switchLanguage": {
+        "bn": "Switch to Bangla (বাংলা)",
+        "en": "Switch to English"
+      },
+      "theme": "Theme: {{theme}}"
+    },
+    "hints": {
+      "move": "move",
+      "open": "open",
+      "close": "close",
+      "escKey": "Esc"
+    }
+  },
+  "ui": {
+    "close": "Close",
+    "dismiss": "Dismiss",
+    "required": "required",
+    "clearSearch": "Clear search",
+    "loading": "Loading…",
+    "notifications": "Notifications",
+    "progressOf": "{{done}} of {{total}}",
+    "percent": "{{value}}%",
+    "choose": "Choose",
+    "delta": {
+      "up": "up",
+      "down": "down",
+      "flat": "unchanged"
+    },
+    "steps": {
+      "label": "Order progress",
+      "done": "done",
+      "current": "in progress",
+      "upcoming": "to do",
+      "names": {
+        "order": "Order",
+        "delivery": "Delivery",
+        "bill": "Bill",
+        "payment": "Payment"
+      }
+    },
+    "table": {
+      "sort": "sort"
+    }
+  },
+  "status": {
+    "order": {
+      "draft": "Draft",
+      "confirmed": "Confirmed",
+      "delivering": "Delivering",
+      "billed": "Billed · awaiting payment",
+      "partlyPaid": "Partly paid",
+      "paid": "Paid",
+      "cancelled": "Cancelled"
+    }
+  },
   "pages": {
-    "inProgress": "This page is still being built.",
-    "orderTitle": "Order {{number}}"
+    "building": {
+      "title": "This screen is still being built"
+    },
+    "orderTitle": "Order {{number}}",
+    "allOrders": "All orders",
+    "dashboard": {
+      "subtitle": "What’s due, what money is expected and what’s being delivered, at a glance.",
+      "upcoming": "Money waiting to be paid, this month’s bills and payments, today’s deliveries and who did what will show here."
+    },
+    "orders": {
+      "subtitle": "Challans, bill, summary and datasheet are generated from each order.",
+      "upcoming": "Every order will be listed here with its status, challan count and bill total, with search and filters."
+    },
+    "newOrder": {
+      "subtitle": "Drop the order in from wherever it came. The system drafts it; you check and confirm.",
+      "upcoming": "Orders will start from an Excel file, a PDF or photo, a phone call, or page by page as before."
+    },
+    "receivables": {
+      "subtitle": "Every ৳100 billed arrives as ৳84 · the deduction rate is a client setting",
+      "upcoming": "Paste a bank SMS here to match a payment, and see which bills are unpaid and for how long."
+    },
+    "clients": {
+      "subtitle": "Organisation → project; each project has its own address, POs and deduction rule",
+      "upcoming": "Each client’s billing this fiscal year, unpaid amount and average days to pay will be here."
+    },
+    "locations": {
+      "subtitle": "The English name clients write and the Bangla name on the datasheet, kept together",
+      "upcoming": "Locations will be listed here with their union, spelling variants and delivery counts."
+    },
+    "packages": {
+      "subtitle": "Everyone knows a package by its price, so the price leads",
+      "upcoming": "The new package list will be here, searchable by price, with an Excel import for the whole list."
+    },
+    "inProgress": "This page is still being built."
+  },
+  "errors": {
+    "notFound": {
+      "title": "Page not found",
+      "lead": "There is no page at this address",
+      "body": "The link may be wrong, or the page has moved.",
+      "action": "Back to the dashboard"
+    },
+    "unexpected": {
+      "title": "Something went wrong",
+      "lead": "This page couldn’t be shown",
+      "body": "Try again; if it keeps happening, reload the app.",
+      "action": "Try again"
+    }
+  },
+  "pwa": {
+    "updateReady": "A new version of the app is ready",
+    "updateHint": "Finish what you’re doing, then reload.",
+    "reload": "Reload now",
+    "later": "Later"
   },
   "server": {
     "status": "Server: {{state}}",
@@ -41,22 +198,5 @@
       "unreachable": "can’t be reached",
       "notConfigured": "not set up yet"
     }
-  },
-  "errors": {
-    "notFound": {
-      "title": "Page not found",
-      "body": "The link may be wrong, or the page has moved.",
-      "action": "Back to the dashboard"
-    },
-    "unexpected": {
-      "title": "Something went wrong",
-      "body": "This page couldn’t be shown. Try again; if it keeps happening, reload the app.",
-      "action": "Try again"
-    }
-  },
-  "pwa": {
-    "updateReady": "A new version of the app is ready.",
-    "reload": "Reload now",
-    "later": "Later"
   }
 }
