@@ -228,7 +228,9 @@ web3 = 30
 
 [auth.email]
 # Allow/disallow new user signups via email to your project.
-enable_signup = false
+# Must stay on: it switches the whole email provider, and member-auth signs members in through it
+# (with derived passwords). Sign-ups are already refused by [auth] enable_signup above.
+enable_signup = true
 # If enabled, a user will be required to confirm any email change on both the old, and new email
 # addresses. If disabled, only the new email is required to confirm.
 double_confirm_changes = true
