@@ -130,7 +130,7 @@
       "confirmed": "নিশ্চিত",
       "delivering": "ডেলিভারি চলছে",
       "billed": "বিল ইস্যু · জমা বাকি",
-      "partlyPaid": "আংশিক জমা",
+      "partially_paid": "আংশিক জমা",
       "paid": "পরিশোধিত",
       "cancelled": "বাতিল"
     }

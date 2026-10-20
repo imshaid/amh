@@ -57,7 +57,7 @@ const ORDER_STATUS_LOOK: Record<OrderStatus, { tone: PillTone; icon: IconCompone
   confirmed: { tone: "brand", icon: IconConfirmed },
   delivering: { tone: "turmeric", icon: IconDelivery },
   billed: { tone: "warn", icon: IconBilled },
-  partlyPaid: { tone: "warn", icon: IconPartlyPaid },
+  partially_paid: { tone: "warn", icon: IconPartlyPaid },
   paid: { tone: "good", icon: IconPaid },
   cancelled: { tone: "neutral", icon: IconCancelled },
 };

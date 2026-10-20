@@ -130,7 +130,7 @@
       "confirmed": "Confirmed",
       "delivering": "Delivering",
       "billed": "Billed · awaiting payment",
-      "partlyPaid": "Partly paid",
+      "partially_paid": "Partly paid",
       "paid": "Paid",
       "cancelled": "Cancelled"
     }

@@ -31,6 +31,9 @@
     "db:status": "supabase status",
     "db:reset": "supabase db reset && npm run db:dev-member",
     "db:dev-member": "node scripts/members.mjs dev-member",
+    "db:types": "node scripts/db-types.mjs",
+    "db:test": "supabase test db",
+    "db:lint": "supabase db lint --schema public,private --level warning --fail-on warning",
     "db:env": "node scripts/supabase-env.mjs",
     "members": "node scripts/members.mjs"
   },

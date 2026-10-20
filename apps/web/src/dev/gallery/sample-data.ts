@@ -72,7 +72,7 @@ export const SAMPLE_ORDERS: SampleOrder[] = [
     to: "2026-09-12",
     challans: 28,
     total: "102620.00",
-    status: "partlyPaid",
+    status: "partially_paid",
   },
   {
     id: "o42",
