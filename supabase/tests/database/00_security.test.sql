@@ -54,7 +54,7 @@ select set_eq(
   $$ select p.oid::regprocedure::text
      from pg_proc p join pg_namespace n on n.oid = p.pronamespace
      where n.nspname = 'public' and has_function_privilege('authenticated', p.oid, 'execute') $$,
-  array[]::text[],
+  array['import_package_list(jsonb,boolean)']::text[],
   'members can run only the approved functions in public'
 );
 

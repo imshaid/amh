@@ -379,6 +379,13 @@ export type Database = {
             foreignKeyName: "challans_location_id_fkey";
             columns: ["location_id"];
             isOneToOne: false;
+            referencedRelation: "location_figures";
+            referencedColumns: ["location_id"];
+          },
+          {
+            foreignKeyName: "challans_location_id_fkey";
+            columns: ["location_id"];
+            isOneToOne: false;
             referencedRelation: "locations";
             referencedColumns: ["id"];
           },
@@ -443,8 +450,22 @@ export type Database = {
             foreignKeyName: "contact_locations_location_id_fkey";
             columns: ["location_id"];
             isOneToOne: false;
+            referencedRelation: "location_figures";
+            referencedColumns: ["location_id"];
+          },
+          {
+            foreignKeyName: "contact_locations_location_id_fkey";
+            columns: ["location_id"];
+            isOneToOne: false;
             referencedRelation: "locations";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "contact_locations_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "project_figures";
+            referencedColumns: ["project_id"];
           },
           {
             foreignKeyName: "contact_locations_project_id_fkey";
@@ -589,6 +610,13 @@ export type Database = {
             foreignKeyName: "import_profiles_project_id_fkey";
             columns: ["project_id"];
             isOneToOne: false;
+            referencedRelation: "project_figures";
+            referencedColumns: ["project_id"];
+          },
+          {
+            foreignKeyName: "import_profiles_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
             referencedRelation: "projects";
             referencedColumns: ["id"];
           },
@@ -687,6 +715,13 @@ export type Database = {
             foreignKeyName: "location_aliases_location_id_fkey";
             columns: ["location_id"];
             isOneToOne: false;
+            referencedRelation: "location_figures";
+            referencedColumns: ["location_id"];
+          },
+          {
+            foreignKeyName: "location_aliases_location_id_fkey";
+            columns: ["location_id"];
+            isOneToOne: false;
             referencedRelation: "locations";
             referencedColumns: ["id"];
           },
@@ -767,6 +802,13 @@ export type Database = {
           updated_at?: string;
         };
         Relationships: [
+          {
+            foreignKeyName: "log_codes_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "project_figures";
+            referencedColumns: ["project_id"];
+          },
           {
             foreignKeyName: "log_codes_project_id_fkey";
             columns: ["project_id"];
@@ -982,6 +1024,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "profiles";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "orders_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "project_figures";
+            referencedColumns: ["project_id"];
           },
           {
             foreignKeyName: "orders_project_id_fkey";
@@ -1458,6 +1507,16 @@ export type Database = {
           },
         ];
       };
+      location_figures: {
+        Row: {
+          deliveries_this_fy: number | null;
+          deliveries_total: number | null;
+          last_delivery_on: string | null;
+          location_id: string | null;
+        };
+        ComputedFields: never;
+        Relationships: [];
+      };
       order_line_totals: {
         Row: {
           amount: number | null;
@@ -1501,8 +1560,25 @@ export type Database = {
         ComputedFields: never;
         Relationships: [];
       };
+      project_figures: {
+        Row: {
+          avg_days_to_pay: number | null;
+          billed_this_fy: number | null;
+          bills_this_fy: number | null;
+          net_per_100: number | null;
+          oldest_unpaid_days: number | null;
+          paid_orders: number | null;
+          project_id: string | null;
+          unpaid: number | null;
+          unpaid_bills: number | null;
+          unpaid_expected_net: number | null;
+        };
+        ComputedFields: never;
+        Relationships: [];
+      };
     };
     Functions: {
+      import_package_list: { Args: { p_apply?: boolean; p_list: Json }; Returns: Json };
       member_check_pin: {
         Args: { p_client_ip?: string; p_phone: string; p_pin_digest: string; p_purpose?: string };
         Returns: Json;
