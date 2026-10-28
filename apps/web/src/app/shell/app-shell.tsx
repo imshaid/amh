@@ -7,6 +7,8 @@ import { useMember } from "@/lib/auth/membership";
 import { useApplyMemberPreferences } from "@/lib/auth/preferences";
 import { DURATION, EASE_OUT } from "@/ui/motion/tokens";
 
+import { LiveSync } from "../live-sync";
+
 import { BottomBar } from "./bottom-bar";
 import { CommandBar } from "./command-bar";
 import { PageTitleProvider } from "./page-title";
@@ -68,6 +70,7 @@ export function AppShell() {
         </div>
         <BottomBar className="lg:hidden" />
         <CommandBar />
+        <LiveSync />
       </div>
     </PageTitleProvider>
   );

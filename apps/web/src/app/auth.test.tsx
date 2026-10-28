@@ -1,6 +1,6 @@
 import { screen, waitFor, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { setLanguage } from "@/i18n/i18n";
 import { createFakeSupabase, MOTHER, sessionReply } from "@/test/fake-supabase";
@@ -37,15 +37,6 @@ beforeEach(async () => {
   server = { session: null, profile: MOTHER, memberAuth: () => ({ status: 500, body: {} }) };
   fake = createFakeSupabase(server);
   backend.client = fake.client;
-  // The live indicator asks the server whether it is up.
-  vi.stubGlobal(
-    "fetch",
-    vi.fn(() => Promise.resolve(new Response(null, { status: 200 }))),
-  );
-});
-
-afterEach(() => {
-  vi.unstubAllGlobals();
 });
 
 async function fillSignIn(phone: string, pin: string) {

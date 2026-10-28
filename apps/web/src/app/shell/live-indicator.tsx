@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useServerStatus } from "@/lib/server-status";
+import { useLiveConnection } from "@/lib/data/live";
+import { clientEnv } from "@/lib/env";
 import { useOnline } from "@/lib/use-online";
 import { cn } from "@/ui/cn";
 import { restartAnimation } from "@/ui/motion/restart-animation";
@@ -26,14 +27,16 @@ const LABEL: Record<LiveState, string> = {
 
 function useLiveState(): LiveState {
   const online = useOnline();
-  const server = useServerStatus();
+  const connection = useLiveConnection();
   if (!online) return "offline";
-  if (server === "connected") return "live";
-  return server;
+  if (!clientEnv.ok) return "notConfigured";
+  if (connection === "live") return "live";
+  return connection === "down" ? "unreachable" : "checking";
 }
 
 /**
- * Whether this device is receiving changes from the others (BLUEPRINT §2.8). The dot pulses once
+ * Whether this device is receiving changes from the others (BLUEPRINT §2.8): the state of the
+ * Realtime channel that brings them (see LiveSync). The dot pulses once
  * when the connection comes up, never in a loop. On phones only the dot shows; screen readers hear
  * the full sentence whenever it changes.
  */

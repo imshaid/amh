@@ -4,9 +4,9 @@ import { vi } from "vitest";
 import type { Member } from "@/lib/auth/membership";
 
 /**
- * A stand-in for the Supabase client, enough for signing in and the membership check. Tests set
- * what the server would say: the stored session, the member's profile (null when RLS hides it),
- * and member-auth's answers.
+ * A stand-in for the Supabase client, enough for signing in, the membership check and the live
+ * channel. Tests set what the server would say: the stored session, the member's profile (null
+ * when RLS hides it), and member-auth's answers; `pushChange` plays an audit row arriving.
  */
 
 type AuthEvent = "SIGNED_IN" | "SIGNED_OUT" | "TOKEN_REFRESHED";
@@ -42,6 +42,15 @@ export function createFakeSupabase(server: FakeServer) {
   const listeners = new Set<(event: AuthEvent) => void>();
   const emit = (event: AuthEvent) => {
     for (const listener of listeners) listener(event);
+  };
+  const changeHandlers = new Set<(payload: { new: unknown }) => void>();
+  const statusHandlers = new Set<(status: string) => void>();
+  const pushChange = (row: Record<string, unknown>) => {
+    for (const handler of changeHandlers) handler({ new: row });
+  };
+  /** Plays the Realtime connection changing, e.g. "CHANNEL_ERROR" then "SUBSCRIBED". */
+  const reportStatus = (status: string) => {
+    for (const handler of statusHandlers) handler(status);
   };
 
   const client = {
@@ -89,6 +98,27 @@ export function createFakeSupabase(server: FakeServer) {
         },
       })),
     })),
+    channel: vi.fn(() => {
+      const channel = {
+        on: vi.fn(
+          (_type: string, _filter: unknown, handler: (payload: { new: unknown }) => void) => {
+            changeHandlers.add(handler);
+            return channel;
+          },
+        ),
+        subscribe: vi.fn((callback?: (status: string) => void) => {
+          if (callback) statusHandlers.add(callback);
+          setTimeout(() => callback?.("SUBSCRIBED"), 0);
+          return channel;
+        }),
+      };
+      return channel;
+    }),
+    removeChannel: vi.fn(() => {
+      changeHandlers.clear();
+      statusHandlers.clear();
+      return Promise.resolve("ok");
+    }),
     functions: {
       invoke: vi.fn((_name: string, { body }: { body: Record<string, unknown> }) => {
         const reply = server.memberAuth(body);
@@ -104,7 +134,7 @@ export function createFakeSupabase(server: FakeServer) {
       }),
     },
   };
-  return { client, emit };
+  return { client, emit, pushChange, reportStatus };
 }
 
 /** Environment for a configured backend; the values are placeholders, never contacted. */
