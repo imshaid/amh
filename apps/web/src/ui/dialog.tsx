@@ -21,6 +21,7 @@ export function Dialog({
   description,
   footer,
   size = "md",
+  onOpenAutoFocus,
   children,
 }: {
   open?: boolean;
@@ -32,6 +33,8 @@ export function Dialog({
   /** Actions, primary last. */
   footer?: ReactNode;
   size?: "sm" | "md" | "lg";
+  /** Where focus starts; by default the first focusable element (the close button). */
+  onOpenAutoFocus?: (event: Event) => void;
   children?: ReactNode;
 }) {
   const { t } = useTranslation();
@@ -41,6 +44,7 @@ export function Dialog({
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-overlay data-[state=closed]:animate-fade-out data-[state=open]:animate-fade-in" />
         <DialogPrimitive.Content
+          {...(onOpenAutoFocus ? { onOpenAutoFocus } : {})}
           // Without a description, say so explicitly; with one, Radix links it itself.
           {...(description ? {} : { "aria-describedby": undefined })}
           className={cn(

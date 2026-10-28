@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { Avatar } from "@/ui/avatar";
 import { Button, IconButton } from "@/ui/button";
+import { Checkbox } from "@/ui/checkbox";
 import { Chip, ChipGroup } from "@/ui/chip";
 import { ConfirmButton } from "@/ui/confirm-button";
 import { Field } from "@/ui/field";
@@ -17,6 +19,7 @@ import {
   IconWarning,
 } from "@/ui/icons";
 import { Input, SearchInput, Textarea } from "@/ui/input";
+import { PinInput } from "@/ui/pin-input";
 import { ORDER_STATUSES } from "@/ui/order-status";
 import { OrderStatusPill, Pill } from "@/ui/pill";
 import { Select } from "@/ui/select";
@@ -109,6 +112,9 @@ export function ButtonsSection() {
   );
 }
 
+/** The three admins by their initials, as the prototype's sidebar shows them. */
+const ADMINS = ["সা", "বা", "মা"] as const;
+
 const CLIENTS = [
   { value: "ap", label: "Thakurgaon AP", description: "World Vision Bangladesh" },
   { value: "reacts", label: "REACTS-IN Project", description: "World Vision Bangladesh" },
@@ -119,6 +125,8 @@ export function FormsSection() {
   const { t } = useTranslation();
   const [search, setSearch] = useState("৪৩০");
   const [client, setClient] = useState<string | undefined>("ap");
+  const [pin, setPin] = useState("4829");
+  const [trusted, setTrusted] = useState(true);
   return (
     <GallerySection
       id="forms"
@@ -169,6 +177,28 @@ export function FormsSection() {
             <Field label={t("gallery.forms.locked")}>
               <Input disabled defaultValue="AMH/26-27/B-0043" className="font-mono" />
             </Field>
+          </div>
+        </Specimen>
+        <Specimen label={t("gallery.forms.signIn")} className="lg:col-span-2">
+          <div className="flex flex-wrap items-start gap-x-10 gap-y-5">
+            <Field label={t("auth.signIn.pin")} hint={t("gallery.forms.pinHint")}>
+              <PinInput value={pin} onValueChange={setPin} autoComplete="off" />
+            </Field>
+            <Checkbox
+              className="max-w-sm"
+              label={t("auth.signIn.trust")}
+              hint={t("auth.signIn.trustHint")}
+              checked={trusted}
+              onCheckedChange={setTrusted}
+            />
+            <div className="flex flex-col gap-2">
+              <p className="text-sm font-medium text-ink-2">{t("gallery.forms.members")}</p>
+              <div className="flex items-center gap-2">
+                {ADMINS.map((name) => (
+                  <Avatar key={name} name={name} />
+                ))}
+              </div>
+            </div>
           </div>
         </Specimen>
       </div>

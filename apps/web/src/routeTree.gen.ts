@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from "./routes/__root";
 import { Route as AppRouteImport } from "./routes/_app";
+import { Route as SignInRouteImport } from "./routes/sign-in";
 import { Route as AppIndexRouteImport } from "./routes/_app/index";
 import { Route as AppClientsRouteImport } from "./routes/_app/clients";
 import { Route as AppLocationsRouteImport } from "./routes/_app/locations";
@@ -22,6 +23,11 @@ import { Route as AppOrdersOrderIdRouteImport } from "./routes/_app/orders/$orde
 
 const AppRoute = AppRouteImport.update({
   id: "/_app",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const SignInRoute = SignInRouteImport.update({
+  id: "/sign-in",
+  path: "/sign-in",
   getParentRoute: () => rootRouteImport,
 } as any);
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -72,6 +78,7 @@ const AppOrdersOrderIdRoute = AppOrdersOrderIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   "/": typeof AppIndexRoute;
+  "/sign-in": typeof SignInRoute;
   "/clients": typeof AppClientsRoute;
   "/locations": typeof AppLocationsRoute;
   "/new": typeof AppNewRoute;
@@ -82,6 +89,7 @@ export interface FileRoutesByFullPath {
   "/orders/": typeof AppOrdersIndexRoute;
 }
 export interface FileRoutesByTo {
+  "/sign-in": typeof SignInRoute;
   "/clients": typeof AppClientsRoute;
   "/locations": typeof AppLocationsRoute;
   "/new": typeof AppNewRoute;
@@ -95,6 +103,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   "/_app": typeof AppRouteWithChildren;
+  "/sign-in": typeof SignInRoute;
   "/_app/clients": typeof AppClientsRoute;
   "/_app/locations": typeof AppLocationsRoute;
   "/_app/new": typeof AppNewRoute;
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | "/"
+    | "/sign-in"
     | "/clients"
     | "/locations"
     | "/new"
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | "/orders/";
   fileRoutesByTo: FileRoutesByTo;
   to:
+    | "/sign-in"
     | "/clients"
     | "/locations"
     | "/new"
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
   id:
     | "__root__"
     | "/_app"
+    | "/sign-in"
     | "/_app/clients"
     | "/_app/locations"
     | "/_app/new"
@@ -144,6 +156,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren;
+  SignInRoute: typeof SignInRoute;
 }
 
 declare module "@tanstack/react-router" {
@@ -153,6 +166,13 @@ declare module "@tanstack/react-router" {
       path: "";
       fullPath: "/";
       preLoaderRoute: typeof AppRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/sign-in": {
+      id: "/sign-in";
+      path: "/sign-in";
+      fullPath: "/sign-in";
+      preLoaderRoute: typeof SignInRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     "/_app/": {
@@ -249,6 +269,7 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren);
 
 const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
+  SignInRoute: SignInRoute,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

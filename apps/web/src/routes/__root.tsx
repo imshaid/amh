@@ -1,5 +1,6 @@
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 
+import { AuthWatcher } from "@/app/auth-watcher";
 import type { RouterContext } from "@/app/router";
 import { UpdatePrompt } from "@/app/update-prompt";
 import { IconProvider } from "@/ui/icons";
@@ -16,6 +17,7 @@ function Root() {
     <IconProvider size={18} strokeWidth={1.75}>
       <MotionProvider>
         <Outlet />
+        <AuthWatcher />
         <Toaster />
         <UpdatePrompt />
       </MotionProvider>

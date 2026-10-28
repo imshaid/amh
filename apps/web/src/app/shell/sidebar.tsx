@@ -7,6 +7,7 @@ import { cn } from "@/ui/cn";
 import { DURATION, EASE_OUT } from "@/ui/motion/tokens";
 
 import { BrandMark } from "./brand-mark";
+import { SidebarMember } from "./member-menu";
 
 /** The hotel's mark and name, linking home. */
 export function Brand({ className }: { className?: string }) {
@@ -72,6 +73,7 @@ export function Sidebar({ className }: { className?: string }) {
           </div>
         ))}
       </nav>
+      <SidebarMember className="mt-auto" />
     </aside>
   );
 }

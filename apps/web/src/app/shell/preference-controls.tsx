@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 
 import { useLanguage } from "@/i18n/hooks";
-import { setLanguage } from "@/i18n/i18n";
 import { LANGUAGES } from "@/i18n/languages";
+import { usePreferenceSetters } from "@/lib/auth/preferences";
 import { THEME_PREFERENCES, useThemePreference } from "@/lib/theme";
 import type { ThemePreference } from "@/lib/theme";
 import { Button } from "@/ui/button";
@@ -22,6 +22,7 @@ import {
 export function LanguageSwitch({ className }: { className?: string }) {
   const { t } = useTranslation();
   const current = useLanguage();
+  const { chooseLanguage } = usePreferenceSetters();
   return (
     <div
       role="group"
@@ -38,7 +39,9 @@ export function LanguageSwitch({ className }: { className?: string }) {
             short: t(`preferences.languageShort.${language}`),
             name: t(`preferences.languageNames.${language}`),
           })}
-          onClick={() => void setLanguage(language)}
+          onClick={() => {
+            chooseLanguage(language);
+          }}
           className={cn(
             "h-8 min-w-10 rounded-md px-2 text-sm font-semibold text-muted transition-colors duration-150 coarse:h-9",
             "hover:text-ink aria-pressed:bg-brand aria-pressed:text-brand-ink",
@@ -60,7 +63,8 @@ const THEME_ICONS: Record<ThemePreference, IconComponent> = {
 /** The theme menu: follow the device, or always light, or always dark. */
 export function ThemeMenu() {
   const { t } = useTranslation();
-  const [preference, setPreference] = useThemePreference();
+  const [preference] = useThemePreference();
+  const { chooseTheme } = usePreferenceSetters();
   const Current = THEME_ICONS[preference];
   return (
     <Menu>
@@ -78,7 +82,7 @@ export function ThemeMenu() {
         <MenuRadioGroup
           value={preference}
           onValueChange={(value) => {
-            setPreference(value as ThemePreference);
+            chooseTheme(value as ThemePreference);
           }}
         >
           {THEME_PREFERENCES.map((option) => {

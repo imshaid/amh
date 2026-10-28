@@ -93,6 +93,66 @@
       "escKey": "Esc"
     }
   },
+  "auth": {
+    "brand": {
+      "line": "Orders, deliveries and bills, all in one place",
+      "proprietor": "Prop. Md. Ziaur Rahman (Zia)",
+      "place": "Thakurgaon Road, Thakurgaon"
+    },
+    "signIn": {
+      "title": "Sign in",
+      "lead": "Enter your mobile number and your 6-digit PIN.",
+      "phone": "Mobile number",
+      "phoneHint": "For example 01712-345678, in Bangla or English digits.",
+      "phoneMissing": "Enter your mobile number.",
+      "phoneInvalid": "That number isn’t right. Enter the 11-digit mobile number that starts with 01.",
+      "pin": "PIN (6 digits)",
+      "trust": "Stay signed in on this device",
+      "trustHint": "On someone else’s phone or a shared computer, untick this. Closing the browser then signs you out.",
+      "submit": "Sign in",
+      "submitting": "Checking…",
+      "forgot": "Forgot your PIN? Another admin can give you a new one.",
+      "noAccess": "This account can no longer sign in, so you were signed out. Talk to another admin if you need access."
+    },
+    "failure": {
+      "invalid": "The mobile number or PIN doesn’t match.",
+      "triesLeft": "{{tries}} more tries, then the number is locked for a while.",
+      "lastTry": "One more wrong PIN locks the number for a while.",
+      "locked": "Too many wrong PINs, so the number is locked for now.",
+      "lockedHelp": "Try again {{wait}}, or ask another admin to give you a new PIN.",
+      "waitMinutes_one": "in {{minutes}} minute",
+      "waitMinutes_other": "in {{minutes}} minutes",
+      "waitHours": "in {{hours}} hours",
+      "inactive": "This number can no longer sign in. Talk to another admin if you need access.",
+      "offline": "No internet. Try again when you’re back online.",
+      "unreachable": "The server can’t be reached. Try again in a moment.",
+      "notConfigured": "The server isn’t set up yet, so you can’t sign in now."
+    }
+  },
+  "member": {
+    "menu": "{{name}}: change PIN and sign out",
+    "section": "Your account",
+    "signedInAs": "Signed in as {{name}}",
+    "signOut": "Sign out",
+    "changePin": {
+      "action": "Change PIN",
+      "title": "Change PIN",
+      "lead": "Enter your current PIN first, then the new one twice.",
+      "current": "Current PIN",
+      "next": "New PIN",
+      "repeat": "New PIN again",
+      "submit": "Keep the new PIN",
+      "done": "Your PIN is changed. From now on, sign in with the new one.",
+      "problems": {
+        "incomplete": "Enter a 6-digit PIN in all three boxes.",
+        "same": "The new PIN is the same as the current one. Choose a different PIN.",
+        "mismatch": "The new PIN wasn’t the same both times. Enter it again.",
+        "wrongCurrent": "The current PIN doesn’t match. {{tries}} more tries.",
+        "wrongCurrentNoCount": "The current PIN doesn’t match.",
+        "locked": "Too many wrong PINs, so the number is locked for a while. Try again later."
+      }
+    }
+  },
   "ui": {
     "close": "Close",
     "dismiss": "Dismiss",
@@ -122,6 +182,10 @@
     },
     "table": {
       "sort": "sort"
+    },
+    "pin": {
+      "show": "Show PIN",
+      "hide": "Hide PIN"
     }
   },
   "status": {
@@ -279,7 +343,10 @@
       "sms": "Bank SMS",
       "smsHint": "Paste the whole SMS, with the BDT amount and the PBD number",
       "smsSample": "BDT 86200.80 has been credited to your a/c through EFT, PBD2781190, on 08-OCT-26.",
-      "locked": "Bill number (locked)"
+      "locked": "Bill number (locked)",
+      "signIn": "PIN, tick box and admins",
+      "pinHint": "Bangla digits work too; the eye button shows them",
+      "members": "Admins"
     },
     "chips": {
       "title": "Chips, tags and statuses",
