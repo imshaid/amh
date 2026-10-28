@@ -8,6 +8,8 @@ export default defineConfig((configEnv) =>
     defineConfig({
       // Tests never read a developer's .env.local, so they cannot reach a real backend.
       envDir: "./src/test",
+      // Sample spreadsheets are imported as fixtures with `?inline` (see src/test/fixtures.ts).
+      assetsInclude: ["**/*.xlsx"],
       test: {
         name: "web",
         environment: "jsdom",
