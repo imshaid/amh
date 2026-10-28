@@ -4,12 +4,14 @@ node_modules/
 # Build output
 dist/
 dist-e2e/
+dist-stack/
 *.tsbuildinfo
 
 # Test output
 coverage/
 .vitest/
 playwright-report/
+playwright-report-stack/
 test-results/
 blob-report/
 

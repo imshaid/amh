@@ -113,7 +113,7 @@ describe("OrderStatusPill", () => {
     expect(screen.getByText("বিল ইস্যু · জমা বাকি")).toBeInTheDocument();
 
     await setLanguage("en");
-    rerender(<OrderStatusPill status="partlyPaid" />);
+    rerender(<OrderStatusPill status="partially_paid" />);
     expect(screen.getByText("Partly paid")).toBeInTheDocument();
   });
 });

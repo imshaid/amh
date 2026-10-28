@@ -11,14 +11,16 @@
     "node": ">=22.12"
   },
   "scripts": {
-    "dev": "npm run dev --workspace @amh/web",
+    "dev": "npm run dev --workspace @amh/web --",
     "build": "npm run build --workspace @amh/web",
     "preview": "npm run preview --workspace @amh/web",
-    "typecheck": "tsc -p tsconfig.json && npm run typecheck --workspaces --if-present",
+    "typecheck": "tsc -p tsconfig.json && tsc -p supabase/functions/tsconfig.json && tsc -p supabase/tests/integration/tsconfig.json && npm run typecheck --workspaces --if-present",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:integration": "vitest run --config supabase/tests/integration/vitest.config.ts",
     "verify": "npm run typecheck && npm run lint && npm run format:check && npm run test",
     "e2e": "npm run e2e --workspace @amh/web",
+    "e2e:stack": "node scripts/supabase-env.mjs --mode stack && npm run e2e:stack --workspace @amh/web",
     "check:bundle": "node scripts/check-bundle.mjs apps/web/dist",
     "check": "npm run verify && npm run build && npm run check:bundle && npm run e2e",
     "lint": "eslint . --max-warnings=0 --cache --cache-location node_modules/.cache/eslint/",
@@ -28,8 +30,14 @@
     "db:start": "supabase start",
     "db:stop": "supabase stop",
     "db:status": "supabase status",
-    "db:reset": "supabase db reset",
-    "db:env": "node scripts/supabase-env.mjs"
+    "db:reset": "supabase db reset && npm run db:dev-member",
+    "db:dev-member": "node scripts/members.mjs dev-member",
+    "db:types": "node scripts/db-types.mjs",
+    "db:test": "supabase test db",
+    "db:lint": "supabase db lint --schema public,private --level warning --fail-on warning",
+    "db:env": "node scripts/supabase-env.mjs",
+    "members": "node scripts/members.mjs",
+    "check:stack": "npm run db:lint && npm run db:test && npm run db:types -- --check && npm run test:integration && npm run e2e:stack"
   },
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.8.1",

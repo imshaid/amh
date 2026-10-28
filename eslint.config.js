@@ -91,7 +91,12 @@ export default defineConfig([
     },
   },
   {
-    files: ["**/*.test.{ts,tsx}", "apps/web/src/test/**", "apps/web/e2e/**"],
+    files: [
+      "**/*.test.{ts,tsx}",
+      "apps/web/src/test/**",
+      "apps/web/e2e/**",
+      "apps/web/e2e-stack/**",
+    ],
     rules: {
       "i18next/no-literal-string": "off",
     },
@@ -103,10 +108,29 @@ export default defineConfig([
       "*.{js,ts}",
       "apps/web/*.{js,ts}",
       "apps/web/e2e/**",
+      "apps/web/e2e-stack/**",
       "apps/web/scripts/**",
       "apps/web/build/**",
       "scripts/**",
     ],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
+  // Edge Functions run in Supabase's Edge Runtime (Deno): web APIs only, no Node modules. Their
+  // tests run in Node and may use it.
+  {
+    files: ["supabase/functions/**/*.ts"],
+    ignores: ["supabase/functions/**/*.test.ts", "supabase/functions/vitest.config.ts"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        { patterns: [{ regex: "^node:", message: "Edge Functions run in Deno; use web APIs." }] },
+      ],
+    },
+  },
+  {
+    files: ["supabase/functions/**/*.test.ts", "supabase/functions/vitest.config.ts"],
     languageOptions: {
       globals: globals.node,
     },

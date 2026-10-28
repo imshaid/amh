@@ -3,6 +3,8 @@ import * as m from "motion/react-m";
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useMember } from "@/lib/auth/membership";
+import { useApplyMemberPreferences } from "@/lib/auth/preferences";
 import { DURATION, EASE_OUT } from "@/ui/motion/tokens";
 
 import { BottomBar } from "./bottom-bar";
@@ -34,6 +36,7 @@ export function AppShell() {
   const { t } = useTranslation();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   useFocusOnNavigation(pathname);
+  useApplyMemberPreferences(useMember());
 
   return (
     <PageTitleProvider>

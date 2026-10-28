@@ -11,6 +11,7 @@ import { DURATION, EASE_OUT } from "@/ui/motion/tokens";
 import { Sheet } from "@/ui/sheet";
 
 import { commandBar } from "./command-bar-store";
+import { SheetMember } from "./member-menu";
 
 const tabClasses =
   "relative flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl pt-2 pb-1.5 text-xs font-medium text-muted transition-colors duration-150 aria-[current=page]:text-brand-strong";
@@ -126,6 +127,11 @@ export function BottomBar({ className }: { className?: string }) {
               </button>
             </li>
           </ul>
+          <SheetMember
+            onAction={() => {
+              setMoreOpen(false);
+            }}
+          />
         </Sheet>
       </div>
     </nav>

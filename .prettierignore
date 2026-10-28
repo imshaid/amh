@@ -2,6 +2,8 @@
 package-lock.json
 **/dist/
 **/dist-e2e/
+**/dist-stack/
+**/playwright-report-stack/
 **/dev-dist/
 **/coverage/
 **/.vitest/

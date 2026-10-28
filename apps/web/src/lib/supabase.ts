@@ -1,14 +1,19 @@
 import { createClient } from "@supabase/supabase-js";
 
+import { sessionStorageAdapter } from "./auth/device-trust";
+import type { Database } from "./database.gen";
 import { clientEnv } from "./env";
 import type { ClientEnv } from "./env";
 
-// Segment 2 adds the generated `Database` type as createClient's type parameter.
 export function createSupabaseClient(env: ClientEnv) {
-  return createClient(env.VITE_SUPABASE_URL, env.VITE_SUPABASE_PUBLISHABLE_KEY, {
+  return createClient<Database>(env.VITE_SUPABASE_URL, env.VITE_SUPABASE_PUBLISHABLE_KEY, {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
+      // Members sign in with a PIN through member-auth, never through a link.
+      detectSessionInUrl: false,
+      storage: sessionStorageAdapter,
+      storageKey: "amh:session",
     },
   });
 }

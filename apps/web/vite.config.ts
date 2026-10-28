@@ -118,8 +118,9 @@ export default defineConfig(({ mode }) => ({
     strictPort: true,
   },
   build: {
-    // E2E builds go elsewhere so they never replace the production build in dist/.
-    outDir: mode === "e2e" ? "dist-e2e" : "dist",
+    // Test builds go elsewhere so they never replace the production build in dist/: `e2e` has no
+    // backend, `stack` talks to the local Supabase stack (see playwright.stack.config.ts).
+    outDir: mode === "e2e" ? "dist-e2e" : mode === "stack" ? "dist-stack" : "dist",
   },
   preview: {
     port: 4173,

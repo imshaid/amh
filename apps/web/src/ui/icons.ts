@@ -91,6 +91,13 @@ export {
   Route as IconRoute,
   Utensils as IconFood,
 
+  // Members and signing in
+  KeyRound as IconPin,
+  LogOut as IconSignOut,
+  Eye as IconShow,
+  EyeOff as IconHide,
+  ShieldCheck as IconTrusted,
+
   // Preferences
   Sun as IconLight,
   Moon as IconDark,

@@ -1,14 +1,21 @@
 // @ts-check
-// Writes apps/web/.env.local for the running local Supabase stack.
-// Only the API URL and the publishable key are copied: the stack's secret and service-role keys
-// must never reach the frontend.
+// Writes apps/web/.env.local for the running local Supabase stack, or with `--mode <name>` the
+// file Vite reads for that build mode (apps/web/.env.<name>.local; the stack end-to-end tests use
+// `--mode stack`). Only the API URL and the publishable key are copied: the stack's secret and
+// service-role keys must never reach the frontend.
 import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const target = join(root, "apps", "web", ".env.local");
+const modeFlag = process.argv.indexOf("--mode");
+const mode = modeFlag === -1 ? null : process.argv[modeFlag + 1];
+if (mode !== null && !/^[a-z][a-z0-9-]*$/.test(mode ?? "")) {
+  console.error("Usage: node scripts/supabase-env.mjs [--mode <name>]");
+  process.exit(2);
+}
+const target = join(root, "apps", "web", mode ? `.env.${mode}.local` : ".env.local");
 
 let output;
 try {
