@@ -48,7 +48,8 @@ insert into storage.objects (bucket_id, name) values ('issued-documents', 'bills
 
 select tests.act_as(:'alice');
 select is(
-  (select count(*)::integer from storage.objects where bucket_id in ('issued-documents', 'backups')),
+  (select count(*)::integer from storage.objects
+   where (bucket_id, name) in (('issued-documents', 'bills/real.pdf'), ('backups', 'weekly.json'))),
   2,
   'members read issued documents and backups'
 );

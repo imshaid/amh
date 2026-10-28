@@ -256,7 +256,8 @@ select is(
 reset role;
 
 select results_eq(
-  $$ select outcome, count(*)::integer from private.sign_in_attempts group by outcome order by outcome $$,
+  -- Only this test's attempts: they carry its transaction's timestamp.
+  $$ select outcome, count(*)::integer from private.sign_in_attempts where at = now() group by outcome order by outcome $$,
   $$ values ('inactive', 1), ('locked', 1), ('ok', 6), ('unknown_phone', 5), ('wrong_pin', 14) $$,
   'every attempt is logged with its outcome'
 );

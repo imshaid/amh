@@ -89,7 +89,11 @@ select throws_ok($$ update public.business_settings set id = true $$, '42501', n
 
 -- Profiles, as a member ----------------------------------------------------------------------
 
-select is((select count(*)::integer from public.profiles), 3, 'members see every profile, active or not');
+select is(
+  (select count(*)::integer from public.profiles where id in (:'alice', :'bob', :'former')),
+  3,
+  'members see every profile, active or not'
+);
 select results_eq(
   format($q$ with changed as (update public.profiles set language = 'en' where id = %L returning id) select count(*)::integer from changed $q$, :'alice'),
   $$ values (1) $$,

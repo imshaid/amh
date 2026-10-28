@@ -109,7 +109,7 @@ select results_eq(
   'an order''s history lists the order, its bill, lines, challans, quantities and summary, in order'
 );
 select is(
-  (select entity_id from public.audit_log where entity_type = 'summaries'),
+  (select entity_id from public.audit_log where entity_type = 'summaries' and order_id = :'o1'),
   :'o1'::uuid,
   'the summary is known by its order'
 );
@@ -147,7 +147,7 @@ select tests.act_as(:'alice');
 update public.profiles set language = 'en', theme = 'dark' where id = :'alice';
 reset role;
 select is(
-  (select count(*)::integer from public.audit_log where entity_type = 'profiles' and action = 'update'),
+  (select count(*)::integer from public.audit_log where entity_id = :'alice' and action = 'update'),
   0,
   'changing language or theme is not a business change'
 );
@@ -155,7 +155,7 @@ select tests.act_as(:'alice');
 update public.profiles set display_name_en = 'Alif', language = 'bn' where id = :'alice';
 reset role;
 select is(
-  (select (after ->> 'display_name_en') || ' ' || (after ? 'language')::text from public.audit_log where entity_type = 'profiles' and action = 'update'),
+  (select (after ->> 'display_name_en') || ' ' || (after ? 'language')::text from public.audit_log where entity_id = :'alice' and action = 'update'),
   'Alif false',
   'changing a name is, and preferences stay out of the record'
 );
@@ -170,7 +170,7 @@ select is(
 
 update public.business_settings set tagline_en = 'Audited';
 select is(
-  (select count(*)::integer from public.audit_log where entity_type = 'business_settings' and entity_id is null),
+  (select count(*)::integer from public.audit_log where entity_type = 'business_settings' and at = now()),
   1,
   'settings changes are recorded too'
 );

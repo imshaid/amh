@@ -254,7 +254,7 @@ select is(
   'balances know how old the bill is'
 );
 select is(
-  (select array_agg(distinct age_bucket order by age_bucket) from public.bill_balances),
+  (select array_agg(distinct age_bucket order by age_bucket) from public.bill_balances where order_id in (:'o1', :'o2')),
   array['0-30', '31-60'],
   'and which age bucket it falls in'
 );
@@ -273,7 +273,10 @@ select ok(
     and not has_table_privilege('authenticated', 'public.bill_balances', 'insert, update, delete'),
   'or the computed figures'
 );
-select ok((select count(*) from public.bill_balances) = 2, 'members read balances');
+select ok(
+  (select count(*) from public.bill_balances where order_id in (:'o1', :'o2')) = 2,
+  'members read balances'
+);
 reset role;
 
 -- Everyone else --------------------------------------------------------------------------------
