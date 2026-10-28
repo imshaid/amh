@@ -495,5 +495,178 @@
       "todayRoute": "Today · Nargun route",
       "deliveredOf": "{{done}} of {{total}} delivered"
     }
+  },
+  "data": {
+    "problems": {
+      "offline": "No internet. Try again once you are back online.",
+      "unreachable": "The server cannot be reached. Try again in a moment.",
+      "duplicate": "One with this name already exists. Use another name, or open the existing one and change it.",
+      "inUse": "This is used in orders or documents, so it cannot be deleted. Switch it off instead.",
+      "invalid": "Something in the form is not right, so nothing was saved. Check the fields again.",
+      "locked": "The bill has been issued, so this can no longer be changed.",
+      "notAllowed": "That was not allowed. Sign out and sign in again, then try once more.",
+      "unknown": "Something went wrong and nothing was saved. Try again."
+    },
+    "notConfigured": {
+      "title": "The server is not set up yet",
+      "body": "The app is running as a preview. Once a server is connected, the real lists appear here."
+    },
+    "loadError": {
+      "title": "The list could not be loaded",
+      "retry": "Try again"
+    }
+  },
+  "forms": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "optional": "(optional)",
+    "errors": {
+      "required": "Fill in this field.",
+      "rate": "Write the price in taka, e.g. 355 or 355.50.",
+      "phone": "Write an 11-digit mobile number starting with 01.",
+      "percent": "Write a rate from 0 to 99.99, e.g. 16.",
+      "code": "Leave no spaces in the code, e.g. 132.01.08.",
+      "itemsRequired": "Write at least one item."
+    }
+  },
+  "directory": {
+    "inactive": "Off",
+    "switchOff": "Switch off",
+    "switchOn": "Switch back on",
+    "delete": "Delete",
+    "deleteConfirm": "Sure? Press again",
+    "manage": "Switch on, off or delete"
+  },
+  "packages": {
+    "add": "Add package",
+    "importAction": "Import the new list",
+    "import": {
+      "title": "Import the package list",
+      "lead": "Choose the new list's Excel file (packages-new.xlsx). It first shows what would change; nothing is saved until you confirm.",
+      "choose": "Choose an Excel file",
+      "dropHint": "or drop the file here",
+      "reading": "Reading the file…",
+      "checking": "Comparing with the current list…",
+      "notXlsx": "This is not an Excel (.xlsx) file. Open it in Excel, save it as .xlsx and try again.",
+      "tooLarge": "This file is far too large to be a package list.",
+      "fileProblems": "A few things in the file are not right. Fix them in Excel and try again:",
+      "issues": {
+        "noPackageSheet": "No ‘packages’ sheet was found, or it has no ‘code’ column.",
+        "missingColumn": "The ‘{{column}}’ column is missing.",
+        "missingRate": "Row {{row}}: {{name}} has no price.",
+        "badRate": "Row {{row}}: the price of {{name}}, ‘{{value}}’, could not be read.",
+        "missingCategory": "Row {{row}}: {{name}} has no kind.",
+        "duplicate": "Row {{row}}: {{name}} is in the list twice.",
+        "unknownPackage": "Items sheet, row {{row}}: no package called ‘{{name}}’ is in the list.",
+        "missingItemText": "Items sheet, row {{row}}: the line for {{name}} has no English text."
+      },
+      "file": "{{name}} · {{packages}} packages, {{categories}} kinds, {{items}} item lines",
+      "outcomes": {
+        "new": "New",
+        "changed": "Changes",
+        "unchanged": "Same"
+      },
+      "changes": {
+        "rate": "price",
+        "items": "items",
+        "category": "kind",
+        "notes": "notes",
+        "name": "spelling of the name",
+        "active": "switched back on"
+      },
+      "sharedPrices": "{{prices}}: more than one package has each of these prices. Typing one in an order asks which.",
+      "withoutItems": "These have no item lines: {{names}}",
+      "notInList": "These are not in the file, so they stay as they are: {{names}}",
+      "unchangedHidden_one": "{{n}} more package is the same.",
+      "unchangedHidden_other": "{{n}} more packages are the same.",
+      "apply_one": "Save {{n}} change",
+      "apply_other": "Save {{n}} changes",
+      "nothingToDo": "Everything is already as in the file; nothing to change.",
+      "applied": "Package list saved",
+      "appliedBody": "{{created}} new, {{changed}} changed.",
+      "another": "Choose another file"
+    },
+    "search": "Search by price or name",
+    "searchPlaceholder": "Type a price, e.g. 430",
+    "categoryFilter": "Filter by kind",
+    "allCategories": "All",
+    "inactiveFilter": "Switched off",
+    "price": "Price {{price}}",
+    "shared": "Another has this price",
+    "sharedHint": "Typing this price in an order asks which package.",
+    "inactiveTag": "Off",
+    "edit": "Edit {{name}}",
+    "moreItems_one": "{{n}} more",
+    "moreItems_other": "{{n}} more",
+    "found_one": "{{n}} package",
+    "found_other": "{{n}} packages",
+    "empty": {
+      "title": "No packages yet",
+      "body": "Import the Excel file of the new list, made from WV's rates, all at once, or add packages one by one."
+    },
+    "noPrice": {
+      "title": "No package at {{price}}",
+      "body": "Check the price, or search by name."
+    },
+    "noMatch": {
+      "title": "Nothing found",
+      "body": "Try another spelling, or search by price."
+    },
+    "editor": {
+      "newTitle": "New package",
+      "editTitle": "Edit package",
+      "name": "Name (WV code)",
+      "nameHint": "The name on WV's POs, e.g. Lunch Basic-07. Bills print this name.",
+      "nameTaken": "Another package has this name.",
+      "category": "Kind",
+      "categoryPlaceholder": "Choose a kind",
+      "newCategory": "New kind",
+      "categoryNameEn": "Kind name (English)",
+      "categoryNameBn": "Kind name (Bangla)",
+      "addCategory": "Add kind",
+      "categoryTaken": "A kind with this name already exists.",
+      "rate": "Price (taka)",
+      "rateHint": "A new price applies to new orders only. Earlier orders and bills keep theirs.",
+      "sharedWith": "{{names}} also costs {{price}}. Typing this price in an order asks which one.",
+      "items": "Items",
+      "itemsHint": "One food per line: Name (variety or brand) — quantity. Units g, ml, L, pc/pcs; ± after approximate amounts; options separated by /.",
+      "itemEn": "English, printed on bills",
+      "itemBn": "Bangla, shown in the app only",
+      "line": "Line {{n}}",
+      "addItem": "Add a line",
+      "moveUp": "Move line {{n}} up",
+      "moveDown": "Move line {{n}} down",
+      "removeItem": "Remove line {{n}}",
+      "styleSeparator": "Put ‘ — ’ before the quantity, e.g.: Plain Rice — 300 g ±",
+      "styleUnits": "Write units short: g, ml, L, pc or pcs.",
+      "styleApprox": "Mark approximate amounts with ± only, e.g. 300 g ±.",
+      "notes": "Notes",
+      "notesHint": "For yourselves; never printed.",
+      "created": "Package added",
+      "saved": "Package saved",
+      "inactiveNote": "This package is switched off, so new orders will not offer it. Earlier orders keep it as it was.",
+      "switchedOff": "The package is switched off; new orders will not offer it.",
+      "switchedOn": "The package is switched back on.",
+      "deleted": "Package deleted",
+      "inUse": "This package is used in orders, so it cannot be deleted. Switch it off instead."
+    },
+    "history": {
+      "title": "Price history",
+      "since": "From {{date}}",
+      "by": "Changed by {{name}}",
+      "byImport": "From the list",
+      "current": "Current price"
+    },
+    "clientCodes": {
+      "title": "Client's names for it",
+      "hint": "If a client writes another name on POs (e.g. ADORSHA_HOTEL_PACKAGE_14_SNACKS_BASIC_3), keep it here so POs match when they are read.",
+      "organisation": "Client",
+      "code": "Their name",
+      "add": "Add name",
+      "remove": "Remove {{code}}",
+      "none": "No names kept yet.",
+      "noOrganisations": "Add clients on the Clients page first; then their names for packages can be kept here.",
+      "taken": "This client's name is already kept on another package."
+    }
   }
 }

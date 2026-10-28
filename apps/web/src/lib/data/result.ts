@@ -11,10 +11,13 @@ export class DataError extends Error {
   }
 }
 
-type Result<T> = { data: T; error: null } | { data: null; error: PostgrestError };
+type Response = { data: unknown; error: null } | { data: null; error: PostgrestError };
+
+/** What a successful response carries (inferring from both branches would add null). */
+type SuccessData<TResponse> = Extract<TResponse, { error: null; data: unknown }>["data"];
 
 /** The data of a Supabase result, or a thrown DataError. */
-export function unwrap<T>(result: Result<T>): T {
+export function unwrap<TResponse extends Response>(result: TResponse): SuccessData<TResponse> {
   if (result.error) throw new DataError(result.error);
   return result.data;
 }
