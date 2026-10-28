@@ -91,7 +91,12 @@ export default defineConfig([
     },
   },
   {
-    files: ["**/*.test.{ts,tsx}", "apps/web/src/test/**", "apps/web/e2e/**"],
+    files: [
+      "**/*.test.{ts,tsx}",
+      "apps/web/src/test/**",
+      "apps/web/e2e/**",
+      "apps/web/e2e-stack/**",
+    ],
     rules: {
       "i18next/no-literal-string": "off",
     },
@@ -103,6 +108,7 @@ export default defineConfig([
       "*.{js,ts}",
       "apps/web/*.{js,ts}",
       "apps/web/e2e/**",
+      "apps/web/e2e-stack/**",
       "apps/web/scripts/**",
       "apps/web/build/**",
       "scripts/**",

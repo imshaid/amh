@@ -20,6 +20,7 @@
     "test:integration": "vitest run --config supabase/tests/integration/vitest.config.ts",
     "verify": "npm run typecheck && npm run lint && npm run format:check && npm run test",
     "e2e": "npm run e2e --workspace @amh/web",
+    "e2e:stack": "node scripts/supabase-env.mjs --mode stack && npm run e2e:stack --workspace @amh/web",
     "check:bundle": "node scripts/check-bundle.mjs apps/web/dist",
     "check": "npm run verify && npm run build && npm run check:bundle && npm run e2e",
     "lint": "eslint . --max-warnings=0 --cache --cache-location node_modules/.cache/eslint/",
@@ -35,7 +36,8 @@
     "db:test": "supabase test db",
     "db:lint": "supabase db lint --schema public,private --level warning --fail-on warning",
     "db:env": "node scripts/supabase-env.mjs",
-    "members": "node scripts/members.mjs"
+    "members": "node scripts/members.mjs",
+    "check:stack": "npm run db:lint && npm run db:test && npm run db:types -- --check && npm run test:integration && npm run e2e:stack"
   },
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.8.1",

@@ -55,6 +55,16 @@ test.describe("foundation smoke", () => {
     await expect(page).toHaveURL("/");
   });
 
+  test("without a backend, the sign-in screen says so instead of taking a PIN", async ({
+    page,
+  }) => {
+    await page.goto("/sign-in");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("লগ ইন");
+    await expect(page.getByRole("alert")).toContainText("সার্ভার এখনো সেট করা হয়নি");
+    await expect(page.getByLabel("মোবাইল নম্বর")).toBeDisabled();
+    await expect(page.getByRole("button", { name: "লগ ইন" })).toBeDisabled();
+  });
+
   test("is installable: manifest, icons and an active service worker", async ({
     page,
     request,
