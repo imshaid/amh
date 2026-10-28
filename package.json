@@ -11,7 +11,7 @@
     "node": ">=22.12"
   },
   "scripts": {
-    "dev": "npm run dev --workspace @amh/web",
+    "dev": "npm run dev --workspace @amh/web --",
     "build": "npm run build --workspace @amh/web",
     "preview": "npm run preview --workspace @amh/web",
     "typecheck": "tsc -p tsconfig.json && tsc -p supabase/functions/tsconfig.json && tsc -p supabase/tests/integration/tsconfig.json && npm run typecheck --workspaces --if-present",
